@@ -4,7 +4,7 @@ export const init = async () => {
   try {
     const conn = await db.getConnection();
     try {
-      const [row] = await conn.query('SELECT * FROM COMMENTS');
+      const [row] = await conn.query('select * from User');
       return row;
     } catch (e) {
       console.error(e);
@@ -23,7 +23,7 @@ export const transaction = async () => {
     const conn = await db.getConnection();
     try {
       await conn.beginTransaction();
-      const query: string = 'SELECT * FROM COMMENTS';
+      const query: string = 'select * from User';
       const query_list: [] = [];
       const [row] = await conn.query(query, query_list);
       await conn.commit();
