@@ -14,4 +14,14 @@ const mysqlConfig: MysqlConfig = {
   waitForConnections: true,
 };
 
-export default mysql.createPool(mysqlConfig);
+const pool = mysql.createPool(mysqlConfig);
+
+export default (fn:any) => async (...args: any) => {
+  const con: any = await pool.getConnection();
+  const result = await fn(con, ...args).catch((error: any) => {
+    con.connection.release();
+    throw error;
+  });
+  con.connection.release();
+  return result;
+}

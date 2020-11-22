@@ -1,42 +1,27 @@
 import db from '../config/mysql_connect';
 
-export const init = async () => {
+export const findCompany = async (keyword: string) => {
   try {
-    const conn = await db.getConnection();
-    try {
-      const [row] = await conn.query('select * from User');
-      return row;
-    } catch (e) {
-      console.error(e);
-      return e;
-    } finally {
-      conn.release();
-    }
+    const SQL: string = 'select * from Company where name = ?';
+    const SQL_VALUES: string[] = [keyword];
+    const [row] = await db((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
   } catch (e) {
     console.error(e);
-    return false;
   }
 };
 
-export const transaction = async () => {
+export const findAllLinks = async (company: string) => {
   try {
-    const conn = await db.getConnection();
-    try {
-      await conn.beginTransaction();
-      const query: string = 'select * from User';
-      const query_list: [] = [];
-      const [row] = await conn.query(query, query_list);
-      await conn.commit();
-      conn.release();
-      return row;
-    } catch (e) {
-      await conn.rollback();
-      conn.release();
-      console.error(e);
-      return false;
-    }
+    const SQL: string = `select Company.name, Links.type, Links.url from Company
+                            inner join Links
+                            on Company.company_id = Links.company_id
+                            where Company.name = ?
+                            order by Links.type asc`;
+    const SQL_VALUES: string[] = [company];
+    const [row] = await db((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
   } catch (e) {
     console.error(e);
-    return false;
   }
 };

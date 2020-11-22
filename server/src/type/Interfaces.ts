@@ -11,3 +11,7 @@ export interface IResponseCompany {
   name: string | undefined,
   link: string | undefined,
 }
+
+export interface IRegExp {
+  [key: string]: RegExp;
+}

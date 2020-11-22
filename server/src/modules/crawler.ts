@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
+import puppeteer, { WrapElementHandle } from 'puppeteer';
 import axios from 'axios';
 import path from 'path';
 import { IResponseCompany } from '../type/Interfaces';
@@ -19,13 +19,12 @@ export const processWanted = async (keyword: string): Promise<IResponseCompany[]
     waitUntil: 'load',
     timeout: 0,
   });
-  const names = await page
+  const names: WrapElementHandle<(string | null)[]> = await page
     .$$eval('.slick-slide.slick-active.slick-current > div > a > button',
       (anchors) => anchors.map((button) => (button as HTMLButtonElement).getAttribute('data-company-name')));
   if (names.length > 0) {
-    const links = await page
-      .$$eval('.slick-slide.slick-active.slick-current > div > a',
-        (anchors) => anchors.map((link) => (link as HTMLLinkElement).href));
+    const links: string[] = await page.$$eval('.slick-slide.slick-active.slick-current > div > a',
+      (anchors) => anchors.map((link) => (link as HTMLLinkElement).href));
     names.forEach((name, index) => {
       data.push({ name: name || '', link: links[index] });
     });
@@ -33,7 +32,6 @@ export const processWanted = async (keyword: string): Promise<IResponseCompany[]
   await browser.close();
   return data;
 };
-
 
 export const processSaramin = async (keyword: string): Promise<IResponseCompany[]> => {
   const origin = 'https://www.saramin.co.kr';
@@ -48,7 +46,6 @@ export const processSaramin = async (keyword: string): Promise<IResponseCompany[
         link: origin + $(element).attr('href'),
       });
     });
-  console.log(data);
   return data;
 };
 
@@ -95,6 +92,35 @@ export const processJobplanet = async (keyword: string): Promise<IResponseCompan
         link: origin + $(element).attr('href'),
       });
     });
+  return data;
+};
+
+export const processRocketpunch = async (keyword: string): Promise<IResponseCompany[]> => {
+  const origin = 'https://www.rocketpunch.com/';
+  const url = `${origin}companies?keywords=${encodeURI(keyword)}`;
+  const data: IResponseCompany[] = [];
+
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
+
+  const page = await browser.newPage();
+  await page.goto(url, {
+    waitUntil: 'load',
+    timeout: 0,
+  });
+  await page.waitForTimeout(1000);
+  const names: WrapElementHandle<(string | null)[]> = await page
+    .$$eval('.company.item a > h4.header.name > strong',
+      (anchors) => anchors.map((element) => (element as HTMLElement).innerHTML));
+  if (names.length > 0) {
+    const links: string[] = await page.$$eval('#company-list .company.item a.link',
+      (anchors) => anchors.map((link) => (link as HTMLLinkElement).href));
+    names.forEach((name, index) => {
+      data.push({ name: name || '', link: links[index] });
+    });
+  }
+  await browser.close();
   return data;
 };
 

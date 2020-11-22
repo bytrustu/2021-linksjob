@@ -7,6 +7,7 @@ create table `Company` (
 create table `Links` (
 `links_id` int not null auto_increment primary key,
 `company_id` int not null,
+`type` varchar(20),
 `url` text not null,
 FOREIGN KEY (`company_id`) REFERENCES `Company` (`company_id`) ON DELETE CASCADE
 );
