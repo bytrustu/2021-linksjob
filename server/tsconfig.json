@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["es2020"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,

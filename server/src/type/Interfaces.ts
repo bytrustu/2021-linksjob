@@ -6,3 +6,8 @@ export interface IErr extends Error {
   status: number;
   data?: any;
 }
+
+export interface IResponseCompany {
+  name: string | undefined,
+  link: string | undefined,
+}
