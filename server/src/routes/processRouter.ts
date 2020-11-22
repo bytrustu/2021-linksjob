@@ -3,6 +3,7 @@ import { testRegExp } from '../modules/util';
 import { RegExp } from '../type/Enums';
 import * as db from '../modules/db_query';
 import MESSAGE from '../const/message';
+import { workingCrawler } from '../modules/crawler';
 
 const router = express.Router();
 

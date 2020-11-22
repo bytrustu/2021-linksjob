@@ -15,3 +15,18 @@ export interface IResponseCompany {
 export interface IRegExp {
   [key: string]: RegExp;
 }
+
+export interface IMessage {
+  [key: string]: string;
+}
+
+export interface ICompany {
+  [key: string]: {
+    origin: string,
+    query: string
+  }
+}
+
+export interface IProcessCrawler {
+  [key: string]: object
+}

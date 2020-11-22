@@ -1,4 +1,6 @@
-export default {
+import { IMessage } from '../type/Interfaces';
+
+const Message: IMessage = {
   validationError: 'Please check your validation.',
   validationExpired: 'Your session is expired. Please login again.',
   loginFail: 'Invalid email address or password.',
@@ -8,3 +10,5 @@ export default {
   ER_CON_COUNT_ERROR: 'Database has too many connections.',
   ECONNREFUSED: 'Database connection was refused.',
 };
+
+export default Message;

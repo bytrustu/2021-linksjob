@@ -3,11 +3,35 @@ import cheerio from 'cheerio';
 import puppeteer, { WrapElementHandle } from 'puppeteer';
 import axios from 'axios';
 import path from 'path';
-import { IResponseCompany } from '../type/Interfaces';
+import { ICompany, IProcessCrawler, IResponseCompany } from '../type/Interfaces';
+import company from '../const/company';
+import { combineUrl, diffArray } from '../modules/util';
+
+export const workingCrawler = async (companyNames: string[], keyword: string): Promise<boolean> => {
+  try {
+    const originCompanyNames = Object.keys(company);
+    const diff = diffArray(originCompanyNames, companyNames);
+    if (diff.length === 0) {
+      return true;
+    }
+
+    let index = 0;
+    for (const item of diff) {
+      console.log(`🔥 start crawler(${++index}/${diff.length}) : ${item} ( keyword: ${keyword} )`);
+      const fn:any = processCrawler[item];
+      const data:ICompany[] = await fn(keyword);
+      console.log(data);
+    }
+
+    return true;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 
 export const processWanted = async (keyword: string): Promise<IResponseCompany[]> => {
-  const origin = 'https://www.wanted.co.kr';
-  const url = `${origin}/search?query=${encodeURI(keyword)}`;
+  const { origin, query } = company.wanted;
+  const url = combineUrl(origin, query, keyword);
   const data: IResponseCompany[] = [];
 
   const browser = await puppeteer.launch({
@@ -34,8 +58,8 @@ export const processWanted = async (keyword: string): Promise<IResponseCompany[]
 };
 
 export const processSaramin = async (keyword: string): Promise<IResponseCompany[]> => {
-  const origin = 'https://www.saramin.co.kr';
-  const url = `${origin}/zf_user/search/company?search_area=main&search_done=y&search_optional_item=n&searchType=default_mysearch&searchword=${encodeURI(keyword)}`;
+  const { origin, query } = company.saramin;
+  const url = combineUrl(origin, query, keyword);
   const response = await axios.get(url);
   let $ = cheerio.load(response.data);
   const data: IResponseCompany[] = [];
@@ -50,14 +74,14 @@ export const processSaramin = async (keyword: string): Promise<IResponseCompany[
 };
 
 export const processKreditjob = async (keyword: string): Promise<IResponseCompany[]> => {
-  const origin = `https://kreditjob.com/`;
+  const { origin } = company.kreditjob;
   const data: IResponseCompany[] = [];
   const companyData: IResponseCompany = {
     name: '',
     link: '',
   };
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
   });
   const page = await browser.newPage();
   await page.goto(origin, {
@@ -80,8 +104,8 @@ export const processKreditjob = async (keyword: string): Promise<IResponseCompan
 };
 
 export const processJobplanet = async (keyword: string): Promise<IResponseCompany[]> => {
-  const origin = 'https://www.jobplanet.co.kr';
-  const url = `${origin}/search?query=${encodeURI(keyword)}`;
+  const { origin, query } = company.jobplanet;
+  const url = combineUrl(origin, query, keyword);
   const response = await axios.get(url);
   let $ = cheerio.load(response.data);
   const data: IResponseCompany[] = [];
@@ -96,8 +120,8 @@ export const processJobplanet = async (keyword: string): Promise<IResponseCompan
 };
 
 export const processRocketpunch = async (keyword: string): Promise<IResponseCompany[]> => {
-  const origin = 'https://www.rocketpunch.com/';
-  const url = `${origin}companies?keywords=${encodeURI(keyword)}`;
+  const { origin, query } = company.rocketpunch;
+  const url = combineUrl(origin, query, keyword);
   const data: IResponseCompany[] = [];
 
   const browser = await puppeteer.launch({
@@ -143,4 +167,12 @@ export const screenShot = async (url: string): Promise<string> => {
   await page.screenshot({ fullPage: true, path: screenshotPath });
   await browser.close();
   return screenshotPath;
+};
+
+export const processCrawler: IProcessCrawler = {
+  wanted: processWanted,
+  saramin: processSaramin,
+  kreditjob: processKreditjob,
+  jobplanet: processJobplanet,
+  rocketpunch: processRocketpunch,
 };

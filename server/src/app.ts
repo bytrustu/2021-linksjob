@@ -33,5 +33,5 @@ app.use((err: IErr, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🔥 Running on Port ${PORT} 🔥`);
+  console.log(`🔥 Running on Port ${PORT}`);
 });
