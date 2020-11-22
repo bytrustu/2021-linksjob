@@ -9,9 +9,13 @@ export const testRegExp = (type: string, value: string): boolean => {
   return rules.hasOwnProperty(type) ? rules[type].test(value) : false;
 };
 
+export const completeKeyword = (keyword: string): string =>
+  keyword
+  .replace(/\s/g,'')
+  .replace(/\([^>]*\)/g, '');
+
 export const combineUrl = (origin: string, query: string, keyword: string) =>
   origin + query + encodeURI(keyword);
-
 
 export const diffArray = (origin: string[], arr: string[]): string[] => {
   const obj = origin.reduce((a: any, c: string) => {

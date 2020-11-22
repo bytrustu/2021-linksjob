@@ -30,3 +30,7 @@ export interface ICompany {
 export interface IProcessCrawler {
   [key: string]: object
 }
+
+export interface ICrawlData {
+  [key: string]: IResponseCompany[]
+}

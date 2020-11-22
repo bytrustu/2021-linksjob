@@ -16,12 +16,25 @@ const mysqlConfig: MysqlConfig = {
 
 const pool = mysql.createPool(mysqlConfig);
 
-export default (fn:any) => async (...args: any) => {
+export const connect = (fn:any) => async (...args: any) => {
   const con: any = await pool.getConnection();
   const result = await fn(con, ...args).catch((error: any) => {
-    con.connection.release();
+    con.release();
     throw error;
   });
-  con.connection.release();
+  con.release();
+  return result;
+}
+
+export const transction = (fn:any) => async (...args: any) => {
+  const con: any = await pool.getConnection();
+  await con.beginTransaction();
+  const result = await fn(con, ...args).catch((error: any) => {
+    con.rollback();
+    con.release();
+    throw error;
+  });
+  con.commit();
+  con.release();
   return result;
 }
