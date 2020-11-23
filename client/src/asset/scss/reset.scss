@@ -1,0 +1,43 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0;-webkit-text-size-adjust:none}
+html,body{width:100%;height:100%}
+body{font-family:NanumBarunGothic,nbg,"굴림",Gulim,"Apple SD Gothic Neo",Sans-serif;font-size:12px;color:#333;-webkit-text-size-adjust:none}
+h1,h2,h3,h4,h5,h6{font-size:12px;text-align:left}
+table{border-collapse:collapse;border-spacing:0}
+img,fieldset,iframe{border:0 none}
+img{vertical-align:top}
+li{list-style:none}
+a{color:#555;text-decoration:none}
+a:hover{text-decoration:underline}
+em,address{font-style:normal}
+button,label{cursor:pointer}
+button{border:0;background:transparent}
+button::-moz-focus-inner{padding:0;border:0}
+input[type=text],input[type=password],input[type=image],textarea,button{font-family:NanumBarunGothic,nbg,"굴림",Gulim,"Apple SD Gothic Neo",Sans-serif;-webkit-appearance:none;-webkit-text-size-adjust:none;border-radius:0;-webkit-border-radius:0}
+select{font-family:NanumBarunGothic,nbg,"굴림",Gulim,"Apple SD Gothic Neo",Sans-serif;-webkit-appearance:none;-moz-appearance:none;appearance:none}
+select::-ms-expand{display:none}
+textarea{overflow:auto}
+hr{display:none}
+legend{*width:0}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+.blind,legend,caption span{overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0;white-space:nowrap;*text-indent:-999em}
+.input_txt, textarea{*margin:-1px 0}
+iframe{width:100%}
+.blind{position:absolute;overflow:hidden;clip:rect(0 0 0 0);margin:-1px;width:1px;height:1px}
+.text_over{overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;white-space:nowrap}
+input:focus,button:focus{outline:none}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px #fff inset;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}

@@ -1,41 +1,40 @@
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import React, { FC, ReactElement } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+// @ts-ignore
+import { Layout, Menu, Breadcrumb } from 'antd';
+import Footer from '../components/Layout/Footer';
 
-type Props = {
-  children?: ReactNode
-  title?: string
+// @ts-ignore
+const { Header, Content } = Layout;
+
+interface Props {
+  children: ReactElement;
 }
 
-const Layout = ({ children, title = 'This is the default title' }: Props) => (
-  <div>
-    <Head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <header>
-      <nav>
-        <Link href="/">
-          <a>Home</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/users">
-          <a>Users List</a>
-        </Link>{' '}
-        | <a href="/api/users">Users API</a>
-      </nav>
-    </header>
-    {children}
-    <footer>
-      <hr />
-      <span>I'm here to stay (Footer)</span>
-    </footer>
-  </div>
+const AppLayout: FC<Props> = ({ children }) => (
+  <Layout className="layout" style={{ backgroundColor: 'white'}}>
+    <Header>
+      <div className="logo" />
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+        <Menu.Item key="1">nav 1</Menu.Item>
+        <Menu.Item key="2">nav 2</Menu.Item>
+        <Menu.Item key="3">nav 3</Menu.Item>
+      </Menu>
+    </Header>
+    <Content style={{ padding: '0 50px' }}>
+      <Breadcrumb style={{ margin: '16px 0' }}>
+        <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>List</Breadcrumb.Item>
+        <Breadcrumb.Item>App</Breadcrumb.Item>
+      </Breadcrumb>
+      <div className="site-layout-content">
+        Content
+        {children}
+      </div>
+    </Content>
+    <Footer/>
+  </Layout>
 )
 
-export default Layout
+export default AppLayout;

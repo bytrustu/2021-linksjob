@@ -7,15 +7,18 @@ import { LOAD_MAIN_COMPANY_POSTS_REQUEST } from '../redux/types';
 const IndexPage = () => {
   const dispatch = useDispatch();
   dispatch({
-    type: LOAD_MAIN_COMPANY_POSTS_REQUEST
+    type: LOAD_MAIN_COMPANY_POSTS_REQUEST,
   });
-  return <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>;
+  return (
+    <>
+      <h1>Hello Next.js 👋</h1>
+      <p>
+        <Link href="/about">
+          <a>About</a>
+        </Link>
+      </p>
+    </>
+  );
+
 };
 export default IndexPage;

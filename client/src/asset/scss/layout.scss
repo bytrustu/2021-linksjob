@@ -1,0 +1,132 @@
+$color-border: #d8d8d8;
+
+// Main Warp
+.main {
+  min-height: 100%;
+  height: 100vh;
+  min-width: 1280px;
+}
+
+
+// Header
+.header {
+  height: 100px;
+  display: block;
+}
+
+
+// Content
+.container {
+  flex-direction: row;
+  border-top: none;
+  padding: 40px 20px 0;
+  border-top: solid 1px $color-border;
+  min-height: calc(100vh - 430px);
+
+  .wrap {
+    display: flex;
+    max-width: 1140px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+}
+
+
+// Footer
+.footer {
+  width: 100%;
+  display: block;
+
+  .footer-notice {
+    padding: 18px 180px;
+    border-top: solid 1px $color-border;
+
+    .text-over {
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      strong {
+        margin-right: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        color: #494949;
+      }
+
+      a {
+        font-size: 14px;
+        color: #494949;
+      }
+    }
+  }
+
+  .footer-inner {
+    border-top: solid 1px $color-border;
+    padding: 39px 180px 50px 180px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .footer-lst {
+
+      .footer-item {
+        display: inline;
+        margin-right: 37px;
+
+        .footer-link {
+          font-size: 14px;
+          line-height: 18px;
+          color: #999;
+        }
+      }
+    }
+
+    .footer-sub-lst {
+      float: right;
+      font-family: 'Montserrat', sans-serif;
+
+      .footer-sub {
+        float: left;
+        position: relative;
+        margin-left: 59px;
+
+        a {
+          text-decoration: none;
+          color: #999;
+          font-size: 14px;
+
+          &::after {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin: 3px 0 0 7px;
+            vertical-align: top;
+            content: '';
+            background: url(../image/ico.png) 0 0 no-repeat;
+            background-position: -33px 0;
+            background-size: 400px auto;
+          }
+
+          span {
+            vertical-align: top;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .copyright {
+      width: 100%;
+      padding-top: 30px;
+      clear: both;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      color: #999;
+    }
+  }
+
+}
