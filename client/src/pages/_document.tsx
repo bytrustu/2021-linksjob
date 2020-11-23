@@ -1,44 +1,42 @@
-import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import Document, { Head, Html, Main, NextScript } from "next/document";
+import React from "react";
+import { ServerStyleSheet } from "styled-components";
 
-// @ts-ignore
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: any) {
-    const sheet = new ServerStyleSheet();
-    const originalRenderPage = ctx.renderPage;
-    try {
-      ctx.renderPage = () => originalRenderPage({
-        enhanceApp: (App: any) => (props: any) => sheet.collectStyles(<App {...props} />),
-      });
-      const initialProps = await Document.getInitialProps(ctx);
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
-      };
-    } catch (e) {
-      console.error(e);
-    } finally {
-      sheet.seal();
-    }
-  }
-
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+        </Head>
         <body>
         <Main />
-        <script
-          src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019" />
         <NextScript />
         </body>
       </Html>
     );
   }
 }
+
+MyDocument.getInitialProps = async (ctx) => {
+  const styledComponentsSheet = new ServerStyleSheet();
+  const originalRenderPage = ctx.renderPage;
+
+  try {
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: (App: any) => (props: any) => styledComponentsSheet.collectStyles(<App {...props} />),
+      });
+
+    const initialProps = await Document.getInitialProps(ctx);
+
+    return {
+      ...initialProps,
+      styles: [
+        ...React.Children.toArray(initialProps.styles),
+        styledComponentsSheet.getStyleElement(),
+      ],
+    };
+  } finally {
+    styledComponentsSheet.seal();
+  }
+};

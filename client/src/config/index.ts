@@ -1,7 +1,9 @@
-import 'dotenv/config';
+interface IConfig {
+  [key: string]: string
+}
 
-const config = {
-  SERVER_URL: process.env.SERVER_URL,
+const config:IConfig = {
+  SERVER_URL: 'http://localhost:9000'
 };
 
 export default config;

@@ -7,26 +7,36 @@ import {
 
 export const initialState = {
   mainCompanyPosts: [],
-}
+  mainCompanyPostsLoading: false,
+  mainCompanyPostsDone: false,
+  mainCompanyPostsError: null,
+};
 
 export type ICompanyReducerState = typeof initialState;
 
-// @ts-ignore
-export default (state = initialState, action) => produce(state, (draft) => {
-  switch (action.type) {
-    case LOAD_MAIN_COMPANY_POSTS_REQUEST: {
-      draft.mainCompanyPosts = !action.lastId ? [] : draft.mainCompanyPosts;
-      break;
+export default (state: ICompanyReducerState = initialState, action: any) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case LOAD_MAIN_COMPANY_POSTS_REQUEST: {
+        draft.mainCompanyPostsLoading = true;
+        draft.mainCompanyPostsDone = false;
+        draft.mainCompanyPostsError = null;
+        break;
+      }
+      case LOAD_MAIN_COMPANY_POSTS_SUCCESS: {
+        draft.mainCompanyPostsLoading = false;
+        draft.mainCompanyPostsDone = true;
+        draft.mainCompanyPosts = draft.mainCompanyPosts.concat(action.data);
+        break;
+      }
+      case LOAD_MAIN_COMPANY_POSTS_FAILURE: {
+        draft.mainCompanyPostsLoading = false;
+        draft.mainCompanyPostsError = action.error;
+        break;
+      }
+      default: {
+        break;
+      }
     }
-    case LOAD_MAIN_COMPANY_POSTS_SUCCESS: {
-      break;
-    }
-    case LOAD_MAIN_COMPANY_POSTS_FAILURE: {
-      break;
-    }
-    default: {
-      break;
-    }
-  }
-});
+  });
 
