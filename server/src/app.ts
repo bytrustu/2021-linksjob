@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import config from './config';
 import { errorHandler, logHandler } from './modules/handler';
 import processRouter from './routes/processRouter';
+import companyRouter from './routes/companyRouter';
 
 const app = express();
 const { PORT } = config;
@@ -23,10 +24,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/process', processRouter);
+app.use('/api/company', companyRouter);
 
 app.use(logHandler);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`🔥 Running on Port ${PORT}`);
-});
+app.listen(PORT);
+
+export default app;
