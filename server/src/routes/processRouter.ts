@@ -17,7 +17,7 @@ const router = express.Router();
  */
 router.get('/:keyword', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let { keyword } = req.params;
+    const { keyword } = req.params;
     const commonKeyword = testRegExp(RegExp.keyword, keyword) ? completeKeyword(keyword) : null;
     let companyId:number;
     if (commonKeyword) {
