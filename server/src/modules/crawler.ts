@@ -59,7 +59,7 @@ const processWanted = async (keyword: string): Promise<IResponseCompany[]> => {
     await browser.close();
     return data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error(e);
   }
 };
@@ -84,7 +84,7 @@ const processSaramin = async (keyword: string): Promise<IResponseCompany[]> => {
       });
     return data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error(e);
   }
 };
@@ -108,7 +108,7 @@ const processKreditjob = async (keyword: string): Promise<IResponseCompany[]> =>
     await page.click('input.search-query');
     await page.keyboard.type(keyword);
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     companyData.link = await page.url();
     if (companyData.link !== origin) {
       const name = await page.evaluate((sel) => {
@@ -120,7 +120,7 @@ const processKreditjob = async (keyword: string): Promise<IResponseCompany[]> =>
     await browser.close();
     return data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error(e);
   }
 };
@@ -134,18 +134,18 @@ const processJobplanet = async (keyword: string): Promise<IResponseCompany[]> =>
     const data: IResponseCompany[] = [];
     $('.is_company_card > .result_card  > a')
       .each((i, element) => {
-        const name = $(element).attr('title');
+        const name = completeKeyword($(element).text());
         const link = origin + $(element).attr('href');
-        if (name !== undefined) {
+        if (name !== undefined && name === keyword) {
           data.push({
-            name: completeKeyword(name),
+            name,
             link,
           });
         }
       });
     return data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error(e);
   }
 };
@@ -181,7 +181,7 @@ const processRocketpunch = async (keyword: string): Promise<IResponseCompany[]> 
     await browser.close();
     return data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error(e);
   }
 };

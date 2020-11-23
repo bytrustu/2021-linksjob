@@ -1,11 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { testRegExp } from '../modules/util';
+import { completeKeyword, diffArray, removeTextRow, testRegExp } from '../modules/util';
 import { RegExp } from '../type/Enums';
 import * as db from '../modules/db_query';
 import MESSAGE from '../const/message';
 import { workingCrawler } from '../modules/crawler';
 import company from '../const/company';
-import { insertCompanyAndLinks } from '../modules/db_query';
 
 const router = express.Router();
 
@@ -16,22 +15,37 @@ const router = express.Router();
  */
 router.get('/:keyword', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { keyword } = req.params;
-    if (testRegExp(RegExp.keyword, keyword)) {
-      const companyData: [] = await db.findCompany(keyword);
+    let { keyword } = req.params;
+    let commonKeyword = testRegExp(RegExp.keyword, keyword) ? completeKeyword(keyword) : null;
+    if (commonKeyword) {
+      const companyData: any[] = await db.findCompany(commonKeyword);
       if (companyData.length === 0) {
-        const crawlData = await workingCrawler([], keyword);
-        await insertCompanyAndLinks(keyword, crawlData);
-        return res.status(200).json([]);
+        await initSettingCompany(commonKeyword);
       } else {
-        const companyData = await db.findAllLinks(keyword);
-        return res.status(200).json(companyData);
+        await partialSettingCompany(commonKeyword, companyData);
       }
+    } else {
+      return res.status(400).json(MESSAGE.validationError);
     }
-    res.status(400).json(MESSAGE.validationError);
+    const linksData = await db.findAllLinks(commonKeyword);
+    res.status(200).json(linksData);
   } catch (e) {
     next(e);
   }
 });
+
+const initSettingCompany = async (keyword: string): Promise<void> => {
+  const companyId = await db.insertCompany(keyword);
+  const crawlData = await workingCrawler([], keyword);
+  await db.insertLinks(keyword, companyId, crawlData);
+};
+
+const partialSettingCompany = async (keyword: string, companyData: any[]): Promise<void> => {
+  const types = await db.findCompanyByTypes(keyword);
+  const queryCompany: string[] = removeTextRow(types).map((element: { type: string }) => element.type);
+  const crawlData = await workingCrawler(queryCompany, keyword);
+  const commonData = removeTextRow(companyData);
+  await db.insertLinks(keyword, commonData[0].company_id, crawlData);
+};
 
 export default router;
