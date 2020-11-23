@@ -13,6 +13,21 @@ export const findCompany = async (keyword: string) => {
   }
 };
 
+export const findAllCompanyLinks = async () => {
+  try {
+    const SQL: string = `select Company.name, Links.type, Links.url from Company
+                          inner join Links
+                          on Company.company_id = Links.company_id
+                          order by Links.type asc`;
+    const SQL_VALUES: [] = [];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
 export const findCompanyLinks = async (companyId: string) => {
   try {
     const SQL: string = `select Company.name, Links.type, Links.url from Company

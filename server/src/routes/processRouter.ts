@@ -4,7 +4,6 @@ import { RegExp } from '../type/Enums';
 import * as db from '../modules/db_query';
 import MESSAGE from '../const/message';
 import { workingCrawler } from '../modules/crawler';
-import company from '../const/company';
 
 const router = express.Router();
 
