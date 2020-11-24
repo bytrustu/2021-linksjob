@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce, { Draft } from 'immer';
 import {
   LOAD_MAIN_COMPANY_POSTS_FAILURE,
   LOAD_MAIN_COMPANY_POSTS_REQUEST,
@@ -15,7 +15,7 @@ export const initialState = {
 export type ICompanyReducerState = typeof initialState;
 
 export default (state: ICompanyReducerState = initialState, action: any) =>
-  produce(state, (draft) => {
+  produce(state, (draft: Draft<ICompanyReducerState>) => {
     switch (action.type) {
       case LOAD_MAIN_COMPANY_POSTS_REQUEST: {
         draft.mainCompanyPostsLoading = true;

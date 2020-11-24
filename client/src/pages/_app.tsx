@@ -6,6 +6,7 @@ import wrapper from '../store/configureStore';
 import AppLayout from '../components/Layout/AppLayout';
 import '../asset/scss/reset.scss';
 import '../asset/scss/layout.scss';
+import '../asset/scss/common.scss';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <>

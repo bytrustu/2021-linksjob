@@ -11,12 +11,7 @@ const IndexPage = () => {
   });
   return (
     <>
-      <h1>Hello Next.js 👋</h1>
-      <p>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-      </p>
+      content
     </>
   );
 

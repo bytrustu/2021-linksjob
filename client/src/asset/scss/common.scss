@@ -1,0 +1,21 @@
+@import "layout";
+
+.btn {
+  width: 82px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 3px;
+}
+
+.btn-danger {
+  border-color: 1px solid $color-red;
+  background-color: $color-red;
+  color: #fff;
+}
+
+.btn-ghost {
+  border: 1px solid #d4d4d4;
+  background-color: #fff;
+  color: #222;
+}

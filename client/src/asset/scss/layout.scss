@@ -1,132 +1,243 @@
 $color-border: #d8d8d8;
+$color-red: #da3238;
+$screen-width: 1140px;
 
 // Main Warp
 .main {
   min-height: 100%;
   height: 100vh;
-  min-width: 1280px;
+  width: 100%;
 }
-
 
 // Header
 .header {
-  height: 100px;
+  height: 90px;
   display: block;
-}
+  border-bottom: 1px solid $color-border;
 
+  .header-warp {
+    position: relative;
+    max-width: $screen-width;
+    height: 100%;
+    margin: 0 auto;
+
+    h1 {
+      color: #222;
+      position: absolute;
+      left: 0;
+      top: 20px;
+
+      span:nth-child(1) {
+        font-size: 35px;
+        font-weight: 900;
+        letter-spacing: 8px;
+        display: inline-block;
+      }
+
+      span:nth-child(2) {
+        margin-left: 7px;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 3px 5px 0 10px;
+        position: absolute;
+        top: 18px;
+        background: #555;
+        color: white;
+        letter-spacing: 5px;
+      }
+
+      :hover {
+        color: #222;
+        text-decoration: none;
+      }
+    }
+
+    .header-nav {
+
+      position: absolute;
+      left: 235px;
+      top: 33px;
+
+      ul {
+        display: flex;
+        flex-direction: row;
+
+        li {
+          width: auto;
+          padding: 0 20px;
+
+          &:nth-child(1) a {
+            font-weight: 700;
+          }
+
+          &:nth-child(2) > a {
+            font-weight: 500;
+          }
+
+          a {
+            color: #222;
+            font-size: 22px;
+            letter-spacing: 2px;
+
+            &:hover {
+              text-decoration: none;
+            }
+
+
+
+          }
+        }
+      }
+    }
+
+    .button-group {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      right: 0;
+      top: 25px;
+
+      .btn + .btn {
+        margin-left: 8px;
+      }
+    }
+
+  }
+}
 
 // Content
 .container {
+  max-width: $screen-width;
+  margin: 0 auto;
   flex-direction: row;
   border-top: none;
-  padding: 40px 20px 0;
-  border-top: solid 1px $color-border;
-  min-height: calc(100vh - 430px);
+  padding: 40px 0;
+  min-height: calc(100vh - 305px);
+  background-color: #f2f2f2;
 
   .wrap {
     display: flex;
-    max-width: 1140px;
+    max-width: $screen-width;
     box-sizing: border-box;
     margin: 0 auto;
   }
 }
-
 
 // Footer
 .footer {
   width: 100%;
   display: block;
 
-  .footer-notice {
-    padding: 18px 180px;
-    border-top: solid 1px $color-border;
+  .footer-top {
+    width: 100%;
+    border-top: 1px solid $color-border;
 
-    .text-over {
-      overflow: hidden;
-      -o-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .footer-warp {
+      max-width: $screen-width;
+      margin: 0 auto;
 
-      strong {
-        margin-right: 25px;
-        font-size: 16px;
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        color: #494949;
-      }
+      .footer-notice {
+        padding: 18px 0;
 
-      a {
-        font-size: 14px;
-        color: #494949;
-      }
-    }
-  }
+        .text-over {
+          overflow: hidden;
+          -o-text-overflow: ellipsis;
+          text-overflow: ellipsis;
+          white-space: nowrap;
 
-  .footer-inner {
-    border-top: solid 1px $color-border;
-    padding: 39px 180px 50px 180px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    .footer-lst {
-
-      .footer-item {
-        display: inline;
-        margin-right: 37px;
-
-        .footer-link {
-          font-size: 14px;
-          line-height: 18px;
-          color: #999;
-        }
-      }
-    }
-
-    .footer-sub-lst {
-      float: right;
-      font-family: 'Montserrat', sans-serif;
-
-      .footer-sub {
-        float: left;
-        position: relative;
-        margin-left: 59px;
-
-        a {
-          text-decoration: none;
-          color: #999;
-          font-size: 14px;
-
-          &::after {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin: 3px 0 0 7px;
-            vertical-align: top;
-            content: '';
-            background: url(../image/ico.png) 0 0 no-repeat;
-            background-position: -33px 0;
-            background-size: 400px auto;
+          strong {
+            margin-right: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            color: #494949;
           }
 
-          span {
-            vertical-align: top;
-            font-weight: 500;
+          a {
+            font-size: 14px;
+            color: #494949;
           }
         }
       }
     }
+  }
 
-    .copyright {
-      width: 100%;
-      padding-top: 30px;
-      clear: both;
-      font-size: 14px;
-      font-family: 'Montserrat', sans-serif;
-      color: #999;
+  .footer-bottom {
+    width: 100%;
+    border-top: 1px solid $color-border;
+
+    .footer-warp {
+      max-width: $screen-width;
+      margin: 0 auto;
+
+      .footer-inner {
+        padding: 39px 0 50px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .footer-lst {
+
+          .footer-item {
+            display: inline;
+            margin-right: 37px;
+
+            .footer-link {
+              font-size: 14px;
+              line-height: 18px;
+              color: #999;
+            }
+          }
+        }
+
+        .footer-sub-lst {
+          float: right;
+          font-family: 'Montserrat', sans-serif;
+
+          .footer-sub {
+            float: left;
+            position: relative;
+            margin-left: 59px;
+
+            a {
+              text-decoration: none;
+              color: #999;
+              font-size: 14px;
+
+              &::after {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin: 3px 0 0 7px;
+                vertical-align: top;
+                content: '';
+                background: url(../image/ico.png) 0 0 no-repeat;
+                background-position: -33px 0;
+                background-size: 400px auto;
+              }
+
+              span {
+                vertical-align: top;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+
+        .copyright {
+          width: 100%;
+          padding-top: 30px;
+          clear: both;
+          font-size: 14px;
+          font-family: 'Montserrat', sans-serif;
+          color: #999;
+        }
+      }
     }
   }
+
 
 }

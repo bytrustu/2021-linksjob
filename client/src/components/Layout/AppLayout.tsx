@@ -11,7 +11,6 @@ const AppLayout: FC<Props> = ({ children }) => (
   <div className="main">
     <Header />
     <Content children={children}/>
-    <Header />
     <Footer />
   </div>
 );
