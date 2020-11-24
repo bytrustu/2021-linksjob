@@ -1,6 +1,7 @@
 $color-border: #d8d8d8;
 $color-red: #da3238;
 $screen-width: 1140px;
+$header-top: 21px;
 
 // Main Warp
 .main {
@@ -25,7 +26,7 @@ $screen-width: 1140px;
       color: #222;
       position: absolute;
       left: 0;
-      top: 20px;
+      top: $header-top;
 
       span:nth-child(1) {
         font-size: 35px;
@@ -56,7 +57,7 @@ $screen-width: 1140px;
 
       position: absolute;
       left: 235px;
-      top: 33px;
+      top: $header-top + 12px;
 
       ul {
         display: flex;
@@ -96,7 +97,7 @@ $screen-width: 1140px;
       flex-direction: row;
       align-items: center;
       right: 0;
-      top: 25px;
+      top: $header-top + 4px;
 
       .btn + .btn {
         margin-left: 8px;
