@@ -1,8 +1,13 @@
 $color-border: #d8d8d8;
 $color-red: #da3238;
 $color-blue: #357dde;
+$color-gray: #f8f8f8;
 $screen-width: 1140px;
 $header-top: 21px;
+
+a:hover {
+  text-decoration: none;
+}
 
 // Main Warp
 .main {
@@ -43,21 +48,20 @@ $header-top: 21px;
         padding: 3px 5px 0 10px;
         position: absolute;
         top: 18px;
-        background: #555;
+        background: $color-red;
         color: white;
         letter-spacing: 5px;
       }
 
       :hover {
         color: #222;
-        text-decoration: none;
       }
     }
 
     .header-nav {
 
       position: absolute;
-      left: 235px;
+      left: 250px;
       top: $header-top + 12px;
 
       ul {
@@ -80,11 +84,6 @@ $header-top: 21px;
             color: #222;
             font-size: 22px;
             letter-spacing: 2px;
-
-            &:hover {
-              text-decoration: none;
-            }
-
 
           }
         }
@@ -126,22 +125,57 @@ $header-top: 21px;
     .main-content {
       width: calc(100% - 300px);
       min-height: 500px;
+
+      .title-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        .main-title {
+          font-size: 40px;
+          font-weight: 800;
+          text-align: center;
+          margin: 48px 0;
+          color: $color-red;
+        }
+        .main-title+.main-title {
+          margin-left: 20px;
+        }
+      }
     }
 
     .aside {
       width: 300px;
       margin-left: 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
 
       .aside-ranking {
         margin-bottom: 24px;
-        padding: 22px 21px 14px;
+        padding: 40px 30px 14px;
         background-color: #f8f8f8;
-        min-height: 400px;
+        min-height: 510px;
         display: flex;
         flex-direction: column;
 
+        p {
+          margin-top: 15px;
+          color: #999;
+          &::before {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            vertical-align: -4px;
+            content: "";
+            background: url(../image/ico.png) 0 0 no-repeat;
+            background-position: -49px 0;
+            background-size: 400px auto;
+          }
+        }
+
         h1 {
-          padding-bottom: 8px;
+          padding-bottom: 15px;
           padding-left: 10px;
           font-size: 18px;
           font-weight: 800;
@@ -151,7 +185,7 @@ $header-top: 21px;
 
           .rank {
             width: 100%;
-            padding: 5px 3px;
+            padding: 7px 3px;
             box-sizing: border-box;
             position: relative;
 
@@ -206,7 +240,6 @@ $header-top: 21px;
               color: #222;
               font-size: 14px;
               &:hover {
-                text-decoration: none;
                 color: #222;
               }
             }
@@ -296,7 +329,6 @@ $header-top: 21px;
             margin-left: 59px;
 
             a {
-              text-decoration: none;
               color: #999;
               font-size: 14px;
 

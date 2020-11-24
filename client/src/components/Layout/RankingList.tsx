@@ -17,7 +17,7 @@ const RankingList: FC<Props> = ({ title, rankData }) => {
           rankData.map((item: IRankData, index: number) => (
             <li className="rank" key={item.name}>
               <span className={`status ${item.type}`}/>
-              <em>{index}</em>
+              <em>{index + 1}</em>
               <Link href={item.link}>
                 <a>{item.name}</a>
               </Link>
@@ -25,6 +25,7 @@ const RankingList: FC<Props> = ({ title, rankData }) => {
           ))
         }
       </ul>
+      <p>실시간으로 많이 검색된 기업 순위</p>
     </div>
   );
 };

@@ -16,20 +16,20 @@ const Header: FC = () => {
           </Link>
         </h1>
 
-        <div className="header-nav">
-          <ul>
-            <li>
-              <Link href="/">
-                <a>홈</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                <a>코멘트</a>
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {/*<div className="header-nav">*/}
+        {/*  <ul>*/}
+        {/*    <li>*/}
+        {/*      <Link href="/">*/}
+        {/*        <a>홈</a>*/}
+        {/*      </Link>*/}
+        {/*    </li>*/}
+        {/*    <li>*/}
+        {/*      <Link href="/">*/}
+        {/*        <a>코멘트</a>*/}
+        {/*      </Link>*/}
+        {/*    </li>*/}
+        {/*  </ul>*/}
+        {/*</div>*/}
 
         <div className="button-group">
           <Button type="danger" value="스크랩"/>

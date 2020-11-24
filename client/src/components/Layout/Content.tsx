@@ -3,7 +3,6 @@ import Link from 'next/link';
 import RankingList from 'src/components/Layout/RankingList';
 import { IRankData } from '../../type/Interfaces';
 import { range } from '../../utils';
-import Loading from '../Loading';
 
 interface Props {
   children: ReactElement;
@@ -11,7 +10,7 @@ interface Props {
 
 const rankData:IRankData[] = [
   ...range(10, 1).map(v => ({
-    name: `회사이름${v}`,
+    name: `기업 이름${v}`,
     link: 'https://github.com/bytrustu',
     type: v % 4 === 0 ? 'normal' : (Math.random() > 0.5 ? 'up' : 'down')
   }))
@@ -25,7 +24,7 @@ const Content: FC<Props> = ({ children }) => {
           {children}
         </div>
         <aside className="aside">
-          <RankingList title="실시간 검색 회사" rankData={rankData}/>
+          <RankingList title="실시간 인기 기업" rankData={rankData}/>
         </aside>
       </div>
     </section>
