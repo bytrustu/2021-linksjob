@@ -33,3 +33,15 @@ export const removeTextRow = (queryData: any) =>
     JSON.stringify(queryData)
       .replace(/TextRow/g, ''),
   );
+
+export const jsonToTypeDic = (data: any) => {
+  const obj: any = {};
+  data.forEach((item: any) => {
+    if (data[item.type]) {
+      data[item.type].push(item);
+    } else {
+      obj[item.type] = [item];
+    }
+  });
+  return obj;
+};

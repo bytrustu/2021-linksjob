@@ -10,6 +10,7 @@ export interface IErr extends Error {
 export interface IResponseCompany {
   name: string | undefined,
   link: string | undefined,
+  type?: string | undefined,
 }
 
 export interface IRegExp {
