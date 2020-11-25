@@ -269,6 +269,10 @@
   top: -10% !important;
   transition-delay: 0s;
   transition: none;
+
+  .ant-modal-close-x {
+    display: none;
+  }
 }
 
 .ant-modal-backdrop.show {
@@ -318,8 +322,80 @@
   font-size: 16px;
 }
 
-.modal-search-text {
-  font-size: 18px;
+.modal-alert {
+
+  .modal-search-text {
+    font-size: 18px;
+  }
+
+  .ant-btn-primary {
+    display: none;
+  }
+}
+
+.modal-company {
+  position: relative;
+  .ant-modal-title {
+    font-size: 24px;
+  }
+  .modal-search-text {
+    font-size: 18px;
+
+    ul {
+      .link-list {
+        padding: 10px 0;
+
+        img {
+          width: 30px;
+          height: 30px;
+          vertical-align: middle;
+        }
+
+        span {
+          display: inline-block;
+          width: 100px;
+          margin-left: 10px;
+          font-size: 14px;
+        }
+
+        a {
+          font-size: 16px;
+          color: lightslategray;
+          text-decoration: underline;
+        }
+
+        a + a {
+          margin-left: 20px;
+        }
+      }
+    }
+    p {
+      font-size: 14px;
+      margin-top: 15px;
+      color: #222;
+    }
+  }
+
+  .ant-btn-primary {
+    display: none !important;
+  }
+
+  .company-favorite {
+    img {
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      cursor: pointer;
+    }
+  }
+}
+
+.modal-confirm {
+  .modal-search-text {
+    font-size: 18px;
+  }
 }
 
 
@@ -401,7 +477,10 @@
   margin-right: 5px;
 }
 
-
 .auth-wrap hr {
   margin-top: 30px;
+}
+
+.logo-padding {
+  padding: 5px;
 }

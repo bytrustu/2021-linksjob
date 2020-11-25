@@ -1,12 +1,15 @@
 import { combineReducers } from 'redux';
-import companyReducer, { ICompanyReducerState } from './companyReducer';
+import company, { ICompanyReducerState } from './companyReducer';
+import user, { IUserReducerState } from './userReducer';
 
 export interface IReducerState {
-  companyReducer: ICompanyReducerState,
+  user: IUserReducerState,
+  company: ICompanyReducerState,
 }
 
 const rootReducer = combineReducers({
-  companyReducer,
+  user,
+  company,
 });
 
 export default rootReducer;

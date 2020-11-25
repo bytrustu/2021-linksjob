@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 
-const ConfirmModal = () => {
-  const [visible, setVisible] = useState(true);
+const ConfirmModal = ({ isVisible, setVisible, company }) => {
   const [isOk, setIsOk] = useState(false);
   const hideModal = () => {
     setVisible(false);
@@ -21,21 +20,20 @@ const ConfirmModal = () => {
   }, [isOk]);
 
   return (
-    <div>
-      <Modal
-        title="확인창"
-        visible={visible}
-        onOk={onOk}
-        onCancel={hideModal}
-        okText="확인"
-        cancelText="취소"
-        centered
-      >
-        <p className="modal-search-text">
-          <strong>"카카오"</strong> 기업의 정보를 수집 합니다.
-        </p>
-      </Modal>
-    </div>
+    <Modal
+      className="modal-confirm"
+      title={company}
+      visible={isVisible}
+      onOk={onOk}
+      onCancel={hideModal}
+      okText="확인"
+      cancelText="취소"
+      centered
+    >
+      <p className="modal-search-text">
+        기업의 정보를 수집 합니다.
+      </p>
+    </Modal>
   );
 };
 

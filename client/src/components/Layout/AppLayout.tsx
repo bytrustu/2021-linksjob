@@ -2,10 +2,8 @@ import React, { FC, ReactElement, useState } from 'react';
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
-import Loading from 'src/components/Loading';
-import { Modal } from 'antd';
-import ConfirmModal from '../Modal/ConfirmModal';
-import CompanyModal from '../Modal/CompanyModal';
+import Loading from '../Loading';
+import { useSelector } from 'react-redux';
 
 interface Props {
   children: ReactElement;
@@ -18,9 +16,10 @@ const AppLayout: FC<Props> = ({ children }) => {
     setVisible(false);
   };
 
+  const { loginUserLoading } = useSelector(state => state.user);
+
   return <div className="main">
-    <CompanyModal />
-    <Loading status={false} />
+    <Loading status={loginUserLoading} />
     <Header />
     <Content children={children} />
     <Footer />

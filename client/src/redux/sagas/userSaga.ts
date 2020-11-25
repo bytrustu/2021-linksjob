@@ -1,36 +1,43 @@
 import { all, fork, takeLatest, put, throttle, call } from 'redux-saga/effects';
 import axios from 'axios';
 import {
-  LOAD_MAIN_COMPANY_POSTS_REQUEST,
-  LOAD_MAIN_COMPANY_POSTS_SUCCESS,
-  LOAD_MAIN_COMPANY_POSTS_FAILURE,
+  LOGIN_USER_REQUEST,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
 } from '../types';
 
-function loadMainComapanyPostAPI() {
-  return axios.get(`/company`);
+function sleep(sec) {
+  return new Promise(resolve => setTimeout(resolve, sec * 1000));
 }
 
-function* loadMainComapanyPost() {
+function loadLoginUserAPI() {
+  return axios.get(`/user`);
+}
+
+function* loadLoginUser() {
   try {
-    const result = yield call(loadMainComapanyPostAPI);
+
+    console.log(`>>>>>>>`);
+    // const result = yield call(loadLoginUserAPI);
+    yield sleep(2);
     yield put({
-      type: LOAD_MAIN_COMPANY_POSTS_SUCCESS,
+      type: LOGIN_USER_SUCCESS,
     });
   } catch (e) {
     console.error(e);
     yield put({
-      type: LOAD_MAIN_COMPANY_POSTS_FAILURE,
+      type: LOGIN_USER_FAILURE,
       error: e,
     });
   }
 }
 
-function* watchLoadMainComapanyPost() {
-  yield takeLatest(LOAD_MAIN_COMPANY_POSTS_REQUEST, loadMainComapanyPost);
+function* watchLoginUser() {
+  yield takeLatest(LOGIN_USER_REQUEST, loadLoginUser);
 }
 
 export default function* companySaga() {
   yield all([
-    fork(watchLoadMainComapanyPost),
+    fork(watchLoginUser),
   ]);
 }

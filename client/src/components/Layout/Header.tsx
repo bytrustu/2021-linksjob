@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 
 const Header: FC = () => {
 
@@ -21,21 +21,6 @@ const Header: FC = () => {
             </a>
           </Link>
         </h1>
-
-        {/*<div className="header-nav">*/}
-        {/*  <ul>*/}
-        {/*    <li>*/}
-        {/*      <Link href="/">*/}
-        {/*        <a>홈</a>*/}
-        {/*      </Link>*/}
-        {/*    </li>*/}
-        {/*    <li>*/}
-        {/*      <Link href="/">*/}
-        {/*        <a>코멘트</a>*/}
-        {/*      </Link>*/}
-        {/*    </li>*/}
-        {/*  </ul>*/}
-        {/*</div>*/}
 
         <div className="button-group">
           <Button type="primary">스크랩</Button>

@@ -1,4 +1,17 @@
 import { IRangeParams } from '../type/Interfaces';
+import { IRegExp } from '../server/src/type/Interfaces';
 
 // @ts-ignore
 export const range: number[] = (n: number, init = 0): IRangeParams => [...(Array(n).keys())].map((_, i) => i + init);
+
+export const testRegExp = (type: string, value: string): boolean => {
+  const rules: IRegExp = {
+    email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+    keyword: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9||\(\)|\*]{1,20}$/,
+    password: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{6,50}$/,
+  };
+  return rules.hasOwnProperty(type) ?
+    rules[type].test(value.replace(/\s/g, '')) : false;
+};
+
+export const isEmptyObject = (obj: any) => JSON.stringify(obj) === '{}';
