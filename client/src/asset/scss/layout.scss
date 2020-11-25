@@ -134,8 +134,8 @@ a:hover {
           font-size: 40px;
           font-weight: 800;
           text-align: center;
-          margin: 48px 0;
-          color: $color-red;
+          margin: 70px 0;
+          color: #555;
         }
         .main-title+.main-title {
           margin-left: 20px;
@@ -153,10 +153,11 @@ a:hover {
       .aside-ranking {
         margin-bottom: 24px;
         padding: 40px 30px 14px;
-        background-color: #f8f8f8;
+        background-color: #fff;
         min-height: 510px;
         display: flex;
         flex-direction: column;
+        border: 1px solid $color-border;
 
         p {
           margin-top: 15px;

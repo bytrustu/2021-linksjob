@@ -8,7 +8,6 @@ type Props = {
 const Loading: FC<Props> = ({ status }) => {
   // @ts-ignore
   const arr: [number] = range(20);
-  console.log(arr);
   return status ? (
     <div className="back">
       <div className="loading-wrap">

@@ -19,4 +19,4 @@
 ![기업정보 크롤링](https://i.imgur.com/Ie1ffrh.png)
 
 - 이용가능하도록 서비스를 제공합니다.
-![프로젝트 스크린샷](https://i.imgur.com/q3JsfTI.png)
+![프로젝트 스크린샷](https://i.imgur.com/dnSEql2.png)

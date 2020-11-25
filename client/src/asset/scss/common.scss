@@ -1,17 +1,25 @@
 @import "layout";
 
-.btn {
+.btn, .ant-btn {
   width: 82px;
   height: 40px;
   font-size: 16px;
   font-weight: 700;
   padding-top: 3px;
+  text-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+
+
+  &:hover {
+    border: 1px solid #d4d4d4;
+    background-color: #fff;
+    color: #222;
+  }
 }
 
-.btn-danger {
-  border-color: 1px solid $color-red;
-  background-color: $color-red;
-  color: #fff;
+.ant-btn {
+  padding-top: 7px;
 }
 
 .btn-ghost {
@@ -19,6 +27,32 @@
   background-color: #fff;
   color: #222;
 }
+
+
+.btn-danger, .ant-btn-danger {
+  border-color: 1px solid $color-red;
+  background-color: $color-red;
+  color: #fff;
+
+  &:hover {
+    border-color: 1px solid $color-red;
+    background-color: $color-red;
+    color: #fff;
+  }
+}
+
+.btn-primary, .ant-btn-primary {
+  border-color: 1px solid $color-blue;
+  background-color: $color-blue;
+  color: #fff;
+
+  &:hover {
+    border-color: 1px solid $color-blue;
+    background-color: $color-blue;
+    color: #fff;
+  }
+}
+
 
 .back {
   position: absolute;
@@ -135,9 +169,11 @@
   height: 304px;
   margin: 48px 0 24px 0;
   overflow: hidden;
+
   & > div {
     padding: 25px 30px 0;
   }
+
   .realtime-company {
     width: 300px;
     height: 100%;
@@ -160,12 +196,15 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
         a {
           width: 250px;
+
           &:hover {
             color: #555;
           }
         }
+
         span {
           width: 100px;
         }
@@ -191,6 +230,7 @@
       margin-right: 20px;
     }
   }
+
   .list-content {
     padding: 10px 15px;
 
@@ -202,6 +242,7 @@
         font-weight: 500;
         letter-spacing: 1px;
         text-decoration: none;
+
         &:hover {
           color: #555;
         }
@@ -217,3 +258,60 @@
 }
 
 
+.ant-modal {
+  padding: 0;
+  top: -10% !important;
+  transition-delay: 0s;
+  transition: none;
+}
+
+.ant-modal-backdrop.show {
+  background-color: transparent;
+}
+
+.ant-modal-content {
+  border: 1px solid #ececec;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+}
+
+.ant-modal-header {
+  position: relative;
+  border-bottom: unset;
+  padding: 45px 45px 0;
+}
+
+.ant-modal-title {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.ant-modal-header .close {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 1em;
+  right: 1em;
+  margin: unset;
+  padding: unset;
+}
+
+.ant-modal-body {
+  padding: 35px 75px 0;
+  font-size: 13px;
+}
+
+.ant-modal-footer {
+  position: relative;
+  border-top: unset;
+  padding: 30px 35px 30px;
+}
+
+.ant-modal-footer button {
+  min-width: 90px;
+  font-size: 16px;
+}
+
+.modal-search-text {
+  font-size: 18px;
+}
