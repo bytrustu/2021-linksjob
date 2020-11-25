@@ -4,6 +4,7 @@ $color-blue: #357dde;
 $color-gray: #f8f8f8;
 $screen-width: 1140px;
 $header-top: 21px;
+$color-title: #555;
 
 a:hover {
   text-decoration: none;
@@ -48,7 +49,7 @@ a:hover {
         padding: 3px 5px 0 10px;
         position: absolute;
         top: 18px;
-        background: $color-red;
+        background: $color-blue;
         color: white;
         letter-spacing: 5px;
       }
@@ -98,7 +99,7 @@ a:hover {
       right: 0;
       top: $header-top + 4px;
 
-      .btn + .btn {
+      .ant-btn + .ant-btn {
         margin-left: 8px;
       }
     }
@@ -112,7 +113,6 @@ a:hover {
   margin: 0 auto;
   border-top: none;
   padding: 40px 0;
-  min-height: calc(100vh - 305px);
 
   .wrap {
     display: flex;
@@ -121,6 +121,7 @@ a:hover {
     max-width: $screen-width;
     box-sizing: border-box;
     margin: 0 auto;
+    min-height: calc(100vh - 400px);
 
     .main-content {
       width: calc(100% - 300px);
@@ -135,7 +136,7 @@ a:hover {
           font-weight: 800;
           text-align: center;
           margin: 70px 0;
-          color: #555;
+          color: $color-title;
         }
         .main-title+.main-title {
           margin-left: 20px;

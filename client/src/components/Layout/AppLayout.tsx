@@ -5,6 +5,7 @@ import Footer from './Footer';
 import Loading from 'src/components/Loading';
 import { Modal } from 'antd';
 import ConfirmModal from '../Modal/ConfirmModal';
+import CompanyModal from '../Modal/CompanyModal';
 
 interface Props {
   children: ReactElement;
@@ -18,7 +19,7 @@ const AppLayout: FC<Props> = ({ children }) => {
   };
 
   return <div className="main">
-    <ConfirmModal />
+    <CompanyModal />
     <Loading status={false} />
     <Header />
     <Content children={children} />

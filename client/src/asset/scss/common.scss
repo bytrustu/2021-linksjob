@@ -9,17 +9,22 @@
   text-shadow: none;
   box-shadow: none;
   border-radius: 0;
+}
 
+.ant-btn {
+  padding-top: 7px;
 
   &:hover {
     border: 1px solid #d4d4d4;
     background-color: #fff;
     color: #222;
   }
-}
 
-.ant-btn {
-  padding-top: 7px;
+  & + .ant-btn-primary {
+    &:hover {
+      border: 1px solid $color-blue;
+    }
+  }
 }
 
 .btn-ghost {
@@ -35,19 +40,19 @@
   color: #fff;
 
   &:hover {
-    border-color: 1px solid $color-red;
+    border: 1px solid $color-red;
     background-color: $color-red;
     color: #fff;
   }
 }
 
 .btn-primary, .ant-btn-primary {
-  border-color: 1px solid $color-blue;
+  border: 1px solid $color-blue;
   background-color: $color-blue;
   color: #fff;
 
   &:hover {
-    border-color: 1px solid $color-blue;
+    border-color: 1px solid $color-blue !important;
     background-color: $color-blue;
     color: #fff;
   }
@@ -60,6 +65,7 @@
   height: 100vh;
   background-color: #00000042;
   z-index: 500;
+  z-index: 9999;
 }
 
 .loading-wrap {
@@ -314,4 +320,88 @@
 
 .modal-search-text {
   font-size: 18px;
+}
+
+
+.auth-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 500px;
+
+  h3 {
+    font-size: 32px;
+    margin-left: -190px;
+  }
+
+  form {
+    width: 400px;
+    margin: 20px auto 60px;
+  }
+
+  .ant-btn {
+    width: 100%;
+    margin-top: 20px;
+    height: 60px;
+  }
+
+  input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border: 1px solid $color-border;
+    height: 60px;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  label {
+    line-height: 2;
+    text-align: left;
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-title;
+    margin-top: 20px;
+  }
+
+  a {
+    display: block;
+    margin-top: 10px;
+    color: $color-title;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+
+.auth-wrap h1 {
+  font-weight: 100;
+  color: white;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(79, 98, 148);
+  color: black;
+}
+
+.auth-wrap p {
+  color: $color-red;
+  font-size: 12px;
+}
+
+.auth-wrap p::before {
+  display: inline;
+  content: "-";
+  margin-right: 5px;
+}
+
+
+.auth-wrap hr {
+  margin-top: 30px;
 }

@@ -1,14 +1,20 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import Button from '../Button';
+import Router from 'next/router';
+import { Button } from 'antd';
 
 const Header: FC = () => {
+
+  const moveLogin = () => {
+    Router.push('/login');
+  };
+
   return (
     <header className="header">
 
       <div className="header-warp">
         <h1>
-          <Link href="">
+          <Link href="/">
             <a>
               <span>LINKS</span>
               <span>JOB</span>
@@ -32,8 +38,8 @@ const Header: FC = () => {
         {/*</div>*/}
 
         <div className="button-group">
-          <Button type="danger" value="스크랩"/>
-          <Button type="ghost" value="로그인"/>
+          <Button type="primary">스크랩</Button>
+          <Button onClick={moveLogin}>로그인</Button>
         </div>
 
       </div>
