@@ -1,11 +1,15 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { LOAD_MAIN_COMPANY_POSTS_REQUEST } from '../redux/types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchInput from '../components/SearchInput';
 import RealtimeContainer from '../components/RealtimeContainer';
 import RankingList from 'src/components/RankingList';
-import { IRankData } from 'src/type/Interfaces';
-import { range } from 'src/utils';
+import { IRankData, ISearchData } from 'src/type/Interfaces';
+import { isEmptyObject, range, testRegExp } from 'src/utils';
+import AlertModal from '../components/Modal/AlertModal';
+import ConfirmModal from '../components/Modal/ConfirmModal';
+import ComapnyModal from '../components/Modal/CompanyModal';
+import { searchRequestAction } from '../redux/reducers/companyReducer';
+import { RootState } from '../redux/reducers';
 
 const rankData: IRankData[] = [
   ...range(10, 1).map(v => ({
@@ -17,17 +21,52 @@ const rankData: IRankData[] = [
 
 const IndexPage = () => {
   const dispatch = useDispatch();
-  dispatch({
-    type: LOAD_MAIN_COMPANY_POSTS_REQUEST,
-  });
+  const { companySearchData } = useSelector((state: RootState) => state.company);
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchData, setSearchData] = useState<ISearchData | {}>({});
+  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState<boolean>(false);
+  const [isCompanyVisible, setIsCompanyVisible] = useState<boolean>(false);
+
+  const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!testRegExp('keyword', searchText)) {
+      setIsAlertVisible(true);
+      return;
+    }
+    dispatch(searchRequestAction);
+  };
+
+  useEffect(() => {
+    const isEmptyData = isEmptyObject(companySearchData);
+    if (isEmptyData && searchText.length > 0) {
+      setIsCompanyVisible(false);
+      setIsConfirmVisible(true);
+      setSearchData({});
+    }
+    if (!isEmptyData && searchText.length > 0) {
+      setSearchData({ ...setSearchData });
+      setIsCompanyVisible(true);
+    }
+    setSearchText('');
+  }, [companySearchData]);
+
+
   return (
     <>
+      <ComapnyModal visible={isCompanyVisible} setVisible={setIsCompanyVisible} />
+      <AlertModal isVisible={isAlertVisible} setVisible={setIsAlertVisible} text="검색어가 잘못 되었습니다." />
+      <ConfirmModal isVisible={isConfirmVisible} setVisible={setIsConfirmVisible} company={searchText} />
       <div className="main-content">
         <div className="title-wrap">
           <h1 className="main-title">기업의 채용정보가 필요할때,</h1>
           <h1 className="main-title"> 검색전에</h1>
         </div>
-        <SearchInput />
+        <SearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} onSubmitSearch={onSubmitSearch} />
         <RealtimeContainer />
       </div>
       <aside className="aside">

@@ -19,28 +19,19 @@ export const initialState = {
   companySearchError: null,
 };
 
+export const searchRequestAction = (searchText: string) => ({
+  type: SEARCH_COMPANY_REQUEST,
+  data: searchText,
+});
+
+export type CompanyAction =
+  ReturnType<typeof searchRequestAction>;
+
 export type ICompanyReducerState = typeof initialState;
 
-export default (state: ICompanyReducerState = initialState, action: any) =>
+export default (state: ICompanyReducerState = initialState, action: CompanyAction) =>
   produce(state, (draft: Draft<ICompanyReducerState>) => {
     switch (action.type) {
-      case LOAD_MAIN_COMPANY_POSTS_REQUEST: {
-        draft.mainCompanyPostsLoading = true;
-        draft.mainCompanyPostsDone = false;
-        draft.mainCompanyPostsError = null;
-        break;
-      }
-      case LOAD_MAIN_COMPANY_POSTS_SUCCESS: {
-        draft.mainCompanyPostsLoading = false;
-        draft.mainCompanyPostsDone = true;
-        draft.mainCompanyPosts = draft.mainCompanyPosts.concat(action.data);
-        break;
-      }
-      case LOAD_MAIN_COMPANY_POSTS_FAILURE: {
-        draft.mainCompanyPostsLoading = false;
-        draft.mainCompanyPostsError = action.error;
-        break;
-      }
       case SEARCH_COMPANY_REQUEST: {
         draft.companySearchLoading = true;
         draft.companySearchDone = false;
