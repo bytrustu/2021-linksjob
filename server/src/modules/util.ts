@@ -1,4 +1,4 @@
-import { IRegExp } from '../type/Interfaces';
+import { IRankData, IRegExp } from '../type/Interfaces';
 
 export const testRegExp = (type: string, value: string): boolean => {
   const rules: IRegExp = {
@@ -45,3 +45,21 @@ export const jsonToTypeDic = (data: any) => {
   });
   return obj;
 };
+
+export const compareRank = (rankData: IRankData) => {
+  return rankData.now.map((value, index) => {
+    const findBeforeIndex = rankData.before.findIndex(item => item.company_id === value.company_id);
+    let status = null;
+    if (findBeforeIndex === -1 || findBeforeIndex > index) {
+      status = 'up';
+    } else if (findBeforeIndex === index) {
+      status = 'normal';
+    } else {
+      status = 'down';
+    }
+    return {
+      ...value,
+      status
+    }
+  })
+}

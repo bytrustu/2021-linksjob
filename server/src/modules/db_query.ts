@@ -114,3 +114,66 @@ export const insertLinks = async (keyword: string, companyId: number, crawlData:
     throw new Error(e);
   }
 };
+
+export const insertSearchLog = async (company: string): Promise<void> => {
+  try {
+    let SQL: string = `insert into SearchLog(company_id)
+                        select company_id from Company where name = ?;`;
+    const SQL_VALUES: [string] = [company];
+    await db.connect(async (con: any) => await con.query(SQL, SQL_VALUES))();
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const findReltimeSearchLog = async () => {
+  try {
+    const SQL: string = `select Company.name, Company.company_id from SearchLog
+                          inner join Company
+                          on SearchLog.company_id = Company.company_id
+                          order by SearchLog.log_id desc
+                          limit 0, 6;`;
+    const SQL_VALUES: string[] = [];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const findCompanyRank = async () => {
+  const rankData = {
+    before: null,
+    now: null,
+  };
+  try {
+    const BEFORE_SQL: string = `select T1.company_id, T1.name from (
+                                  select SearchLog.company_id, Company.name, count(SearchLog.company_id) as count from SearchLog
+                                  inner join Company
+                                  on SearchLog.company_id = Company.company_id
+                                  where SearchLog.create_date between date_add(now(), interval -2 day) and date_add(now(), interval -1 day)
+                                  group by SearchLog.company_id
+                                  order by count desc
+                                ) as T1`;
+    const BEFORE_SQL_VALUES: [] = [];
+    const SQL: string = `select T1.company_id, T1.name from (
+                            select SearchLog.company_id, Company.name, count(SearchLog.company_id) as count from SearchLog
+                            inner join Company
+                            on SearchLog.company_id = Company.company_id
+                            where SearchLog.create_date between date_add(now(), interval -1 day) and now()
+                            group by SearchLog.company_id
+                            order by count desc
+                          ) as T1`;
+    const SQL_VALUES: string[] = [];
+    const [beforeRow] = await db.connect((con: any) => con.query(BEFORE_SQL, BEFORE_SQL_VALUES))();
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    rankData.before = beforeRow;
+    rankData.now = row;
+    return rankData;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};

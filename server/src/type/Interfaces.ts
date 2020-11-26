@@ -35,3 +35,10 @@ export interface IProcessCrawler {
 export interface ICrawlData {
   [key: string]: IResponseCompany[]
 }
+
+export interface IRankData {
+  [key: string]: {
+    company_id: number,
+    name: string,
+  }[]
+}

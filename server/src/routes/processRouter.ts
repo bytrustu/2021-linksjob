@@ -21,6 +21,7 @@ router.get('/:keyword', async (req: Request, res: Response, next: NextFunction) 
     let companyId:number;
     if (commonKeyword) {
       const companyData: any[] = await db.findCompany(commonKeyword);
+      new Error();
       companyId = companyData.length === 0 ?
         await initSettingCompany(commonKeyword)
         :
@@ -28,6 +29,7 @@ router.get('/:keyword', async (req: Request, res: Response, next: NextFunction) 
     } else {
       return res.status(400).send({ error: MESSAGE.validationError });
     }
+    await db.insertSearchLog(commonKeyword);
     const companyByLinks = await db.findCompanyIdByLinks(companyId);
     const commonData = jsonToTypeDic(removeTextRow(companyByLinks));
     return res.status(200).json(commonData);

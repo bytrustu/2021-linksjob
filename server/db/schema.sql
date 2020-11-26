@@ -27,3 +27,10 @@ create table `Favorited` (
 FOREIGN KEY (`id`) REFERENCES `User` (`id`) ON DELETE CASCADE,
 FOREIGN KEY (`company_id`) REFERENCES `Company` (`company_id`) ON DELETE CASCADE
 );
+
+create table `SearchLog` (
+`log_id` int not null auto_increment primary key,
+`company_id` int not null,
+`create_date` timestamp not null default current_timestamp,
+FOREIGN KEY (`company_id`) REFERENCES `Company` (`company_id`) ON DELETE CASCADE
+);
