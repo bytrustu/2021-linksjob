@@ -4,26 +4,21 @@ import SearchInput from '../components/SearchInput';
 import RealtimeContainer from '../components/RealtimeContainer';
 import RankingList from 'src/components/RankingList';
 import { IRankData, ISearchData } from 'src/type/Interfaces';
-import { isEmptyObject, range, testRegExp } from 'src/utils';
 import AlertModal from '../components/Modal/AlertModal';
 import ConfirmModal from '../components/Modal/ConfirmModal';
 import ComapnyModal from '../components/Modal/CompanyModal';
-import { searchRequestAction } from '../redux/reducers/companyReducer';
+import Loading from '../components/Loading';
+import { loadRankAction, loadRealtimeSearchAction, searchRequestAction } from '../redux/reducers/companyReducer';
+import { isEmptyObject, range, testRegExp } from '../utils';
+import { noMatchRegExpKeyword, searchError } from '../utils/const';
 import { RootState } from '../redux/reducers';
-import Loading from 'src/components/Loading';
 
-const rankData: IRankData[] = [
-  ...range(10, 1).map(v => ({
-    name: `기업 이름${v}`,
-    link: 'https://github.com/bytrustu',
-    type: v % 4 === 0 ? 'normal' : (Math.random() > 0.5 ? 'up' : 'down'),
-  })),
-];
 
 const IndexPage = () => {
   const dispatch = useDispatch();
-  const { companySearchData, companySearchLoading } = useSelector((state: RootState) => state.company);
+  const { companySearchData, companySearchLoading, companySearchError, loadRankData, loadRealtimeSearchData } = useSelector((state: RootState) => state.company);
   const [searchText, setSearchText] = useState<string>('');
+  const [alertText, setAlertText] = useState<string>('');
   const [searchData, setSearchData] = useState<ISearchData | {}>({});
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState<boolean>(false);
@@ -37,9 +32,17 @@ const IndexPage = () => {
     e.preventDefault();
     if (!testRegExp('keyword', searchText)) {
       setIsAlertVisible(true);
+      setAlertText(noMatchRegExpKeyword);
       return;
+    } else {
+      setAlertText('');
     }
     dispatch(searchRequestAction(searchText));
+  };
+
+  const onClickSearchComapny = (keyword: string) => {
+    setSearchText(keyword);
+    dispatch(searchRequestAction(keyword));
   };
 
   useEffect(() => {
@@ -55,12 +58,24 @@ const IndexPage = () => {
     }
   }, [companySearchData]);
 
+  useEffect(() => {
+    dispatch(loadRankAction());
+    dispatch(loadRealtimeSearchAction());
+  }, []);
+
+  useEffect(() => {
+    if (companySearchError) {
+      setAlertText(searchError);
+      setIsAlertVisible(true);
+    }
+  }, [companySearchError]);
+
 
   return (
     <>
       <Loading status={companySearchLoading} />
-      <ComapnyModal visible={isCompanyVisible} setVisible={setIsCompanyVisible} />
-      <AlertModal isVisible={isAlertVisible} setVisible={setIsAlertVisible} text="검색어가 잘못 되었습니다." />
+      <ComapnyModal visible={isCompanyVisible} setVisible={setIsCompanyVisible} keyword={searchText} />
+      <AlertModal isVisible={isAlertVisible} setVisible={setIsAlertVisible} text={alertText} />
       <ConfirmModal isVisible={isConfirmVisible} setVisible={setIsConfirmVisible} company={searchText} />
       <div className="main-content">
         <div className="title-wrap">
@@ -68,10 +83,10 @@ const IndexPage = () => {
           <h1 className="main-title"> 검색전에</h1>
         </div>
         <SearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} onSubmitSearch={onSubmitSearch} />
-        <RealtimeContainer />
+        <RealtimeContainer realtimeKeywordData={loadRealtimeSearchData} onClickSearchComapny={onClickSearchComapny}/>
       </div>
       <aside className="aside">
-        <RankingList title="실시간 인기 기업" rankData={rankData} />
+        <RankingList title="실시간 인기 기업" rankData={loadRankData} onClickSearchComapny={onClickSearchComapny}/>
       </aside>
     </>
   );

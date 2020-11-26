@@ -8,12 +8,17 @@ const ConfirmModal = ({ isVisible, setVisible, company }) => {
   const [isOk, setIsOk] = useState(false);
   const hideModal = () => {
     setVisible(false);
+    setIsOk(false);
   };
 
   const onOk = () => {
     setVisible(false);
     setIsOk(true);
   };
+
+  useEffect(() => {
+    setIsOk(false);
+  }, [isVisible])
 
   useEffect(() => {
     if (isOk) {

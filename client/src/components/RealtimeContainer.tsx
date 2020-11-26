@@ -2,11 +2,15 @@ import React, { FC } from 'react';
 import RealtimeCompany from 'src/components/RealtimeCompany';
 import RealtimeComment from 'src/components/RealtimeComment';
 
-const RealtimeContainer:FC = () => {
+type RealtimeContainerType = {
+  realtimeKeywordData: any;
+}
+
+const RealtimeContainer: FC<RealtimeContainerType> = ({ realtimeKeywordData, onClickSearchComapny }) => {
   return (
     <section className="realtime-wrap">
-      <RealtimeCompany/>
-      <RealtimeComment/>
+      <RealtimeCompany realtimeKeywordData={realtimeKeywordData} onClickSearchComapny={onClickSearchComapny}/>
+      <RealtimeComment />
     </section>
   );
 };

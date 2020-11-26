@@ -206,6 +206,7 @@
 
         a {
           width: 250px;
+          text-align: left;
 
           &:hover {
             color: #555;
@@ -214,6 +215,7 @@
 
         span {
           width: 100px;
+          text-align: right;
         }
       }
     }

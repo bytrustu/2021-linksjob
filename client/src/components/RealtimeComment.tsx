@@ -7,44 +7,14 @@ const RealtimeComment = () => {
       <div className="comment-wrap">
         <div className="list-header">
           <span>최근 코멘트 기업</span>
-          <span>총 100 건</span>
+          <span>총 0 건</span>
         </div>
         <div className="list-content">
           <li className="list-item">
             <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
+              <a className="ellipsis">추가예정 입니다.</a>
             </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
-          </li>
-          <li className="list-item">
-            <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-            </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
-          </li>
-          <li className="list-item">
-            <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-            </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
-          </li>
-          <li className="list-item">
-            <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-            </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
-          </li>
-          <li className="list-item">
-            <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-            </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
-          </li>
-          <li className="list-item">
-            <Link href="">
-              <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-            </Link>
-            <span className="ellipsis">스타스타스타스타스타스타</span>
+            <span className="ellipsis">기업명</span>
           </li>
         </div>
       </div>

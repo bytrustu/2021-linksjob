@@ -1,29 +1,32 @@
 import produce, { Draft } from 'immer';
 import {
-  LOAD_MAIN_COMPANY_POSTS_FAILURE,
-  LOAD_MAIN_COMPANY_POSTS_REQUEST,
-  LOAD_MAIN_COMPANY_POSTS_SUCCESS,
   SEARCH_COMPANY_FAILURE,
   SEARCH_COMPANY_REQUEST,
   SEARCH_COMPANY_SUCCESS,
   PROCESS_COMPANY_FAILURE,
   PROCESS_COMPANY_REQUEST,
   PROCESS_COMPANY_SUCCESS,
+  LOAD_RANK_FAILURE,
+  LOAD_RANK_REQUEST,
+  LOAD_RANK_SUCCESS,
+  LOAD_REALTIME_SEARCH_REQUEST,
+  LOAD_REALTIME_SEARCH_SUCCESS,
+  LOAD_REALTIME_SEARCH_FAILURE,
 } from '../types';
 
 export const initialState = {
-  mainCompanyPosts: [],
-  mainCompanyPostsLoading: false,
-  mainCompanyPostsDone: false,
-  mainCompanyPostsError: null,
   companySearchData: null,
   companySearchLoading: false,
   companySearchDone: false,
   companySearchError: null,
-  processCompanyLoading: false,
-  processCompanyDone: false,
-  processCompanyError: null,
-  processCompanyData: null,
+  loadRankData: null,
+  loadRankLoading: false,
+  loadRankDone: false,
+  loadRankError: null,
+  loadRealtimeSearchData: null,
+  loadRealtimeSearchLoading: false,
+  loadRealtimeSearchDone: false,
+  loadRealtimeSearchError: null,
 };
 
 export const searchRequestAction = (searchText: string) => ({
@@ -36,9 +39,19 @@ export const processCompanyAction = (company: string) => ({
   data: company,
 });
 
+export const loadRankAction = () => ({
+  type: LOAD_RANK_REQUEST,
+});
+
+export const loadRealtimeSearchAction = () => ({
+  type: LOAD_REALTIME_SEARCH_REQUEST,
+});
+
 export type CompanyAction =
   | ReturnType<typeof searchRequestAction>
-  | ReturnType<typeof processCompanyAction>;
+  | ReturnType<typeof processCompanyAction>
+  | ReturnType<typeof loadRankAction>
+  | ReturnType<typeof loadRealtimeSearchAction>;
 
 export type ICompanyReducerState = typeof initialState;
 
@@ -65,23 +78,40 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
         draft.companySearchError = action.error;
         break;
       }
-      // case PROCESS_COMPANY_REQUEST: {
-      //   draft.processCompanyLoading = true;
-      //   draft.processCompanyDone = false;
-      //   draft.processCompanyError = null;
-      //   break;
-      // }
-      // case PROCESS_COMPANY_SUCCESS: {
-      //   draft.processCompanyLoading = false;
-      //   draft.processCompanyDone = true;
-      //   draft.processCompanyData = action.data.data ? action.data.data : null;
-      //   break;
-      // }
-      // case PROCESS_COMPANY_FAILURE: {
-      //   draft.processCompanyLoading = false;
-      //   draft.processCompanyError = action.error;
-      //   break;
-      // }
+      case LOAD_RANK_REQUEST: {
+        draft.loadRankLoading = true;
+        draft.loadRankDone = false;
+        draft.loadRankError = null;
+        break;
+      }
+      case LOAD_RANK_SUCCESS: {
+        draft.loadRankLoading = false;
+        draft.loadRankDone = true;
+        draft.loadRankData = action.data.data ? action.data.data : [];
+        break;
+      }
+      case LOAD_RANK_FAILURE: {
+        draft.loadRankLoading = false;
+        draft.loadRankError = action.error;
+        break;
+      }
+      case LOAD_REALTIME_SEARCH_REQUEST: {
+        draft.loadRealtimeSearchLoading = true;
+        draft.loadRealtimeSearchDone = false;
+        draft.loadRealtimeSearchError = null;
+        break;
+      }
+      case LOAD_REALTIME_SEARCH_SUCCESS: {
+        draft.loadRealtimeSearchLoading = false;
+        draft.loadRealtimeSearchDone = true;
+        draft.loadRealtimeSearchData = action.data.data ? action.data.data : [];
+        break;
+      }
+      case LOAD_REALTIME_SEARCH_FAILURE: {
+        draft.loadRealtimeSearchLoading = false;
+        draft.loadRealtimeSearchError = action.error;
+        break;
+      }
       default: {
         break;
       }

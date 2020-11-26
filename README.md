@@ -19,6 +19,6 @@
 ![기업정보 크롤링](https://i.imgur.com/Ie1ffrh.png)
 
 - 이용가능하도록 서비스를 제공합니다.
-![프로젝트 스크린샷](https://i.imgur.com/qfAmsFF.png)
+![프로젝트 스크린샷](https://i.imgur.com/Y5gzt37.png)
 ![프로젝트 스크린샷](https://i.imgur.com/FvbqfTc.png)
 [![유튜브 영상](https://i.imgur.com/pnbnHsc.png)](https://youtu.be/uCABcYn4qU0)

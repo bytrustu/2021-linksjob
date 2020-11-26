@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 
-const RealtimeCompany = () => {
+type RealtimeCompanyType = {
+  realtimeKeywordData: any;
+}
+
+const RealtimeCompany:FC<RealtimeCompanyType> = ({ realtimeKeywordData, onClickSearchComapny }) => {
+
   return (
     <div className="realtime-company">
       <div className="list-header">
@@ -9,24 +14,13 @@ const RealtimeCompany = () => {
       </div>
       <ul className="list-content">
         <li>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
-          <Link href="">
-            <a className="ellipsis">가나다라마바사가나다라마바시사사ㅏ사사사사사</a>
-          </Link>
+          {
+            realtimeKeywordData && realtimeKeywordData.map((value: { name: React.ReactNode; }) => (
+              <Link href="">
+                <a className="ellipsis" onClick={() => onClickSearchComapny(value.name)}>{value.name}</a>
+              </Link>
+            ))
+          }
         </li>
       </ul>
     </div>

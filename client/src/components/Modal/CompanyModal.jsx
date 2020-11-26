@@ -2,44 +2,16 @@ import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import { companyObj } from '../../utils/const';
 
-const CompanyModal = ({visible, setVisible}) => {
+const CompanyModal = ({visible, setVisible, keyword}) => {
 
   const { companySearchData } = useSelector(state => state.company);
   const [companyData, setCompanyData] = useState({});
 
-  const companyObj = {
-    jobplanet: {
-      name: '잡플래닛',
-      image: '/image/jobplanet.png',
-      padding: true,
-    },
-    kreditjob: {
-      name: '크레딧잡',
-      image: '/image/kreditjob.ico',
-      padding: true,
-    },
-    rocketpunch: {
-      name: '로켓펀치',
-      image: '/image/rocketpunch.svg',
-      padding: true,
-    },
-    saramin: {
-      name: '사람인',
-      image: '/image/saramin.ico',
-      padding: true,
-    },
-    wanted: {
-      name: '원티드',
-      image: '/image/wanted.png',
-      padding: false,
-    }
-  }
-
   useEffect(() => {
     if (visible) {
       setCompanyData({...companySearchData});
-      console.log(companySearchData);
     }
   }, [visible])
 
@@ -68,7 +40,7 @@ const CompanyModal = ({visible, setVisible}) => {
   return (
     <Modal
       className="modal-company"
-      title="카카오"
+      title={keyword}
       visible={visible}
       onCancel={hideModal}
       okText="스크랩"
@@ -87,7 +59,6 @@ const CompanyModal = ({visible, setVisible}) => {
         <ul>
           {
             companyData && Object.entries(companyData).map(([key, value]) => {
-              console.log(value.padding);
               const name = companyObj[key].name;
               const src = companyObj[key].image;
               const isPadding = companyObj[key].padding;

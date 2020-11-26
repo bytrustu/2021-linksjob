@@ -5,20 +5,21 @@ import { IRankData } from 'src/type/Interfaces'
 
 type Props = {
   title: string,
-  rankData: IRankData[]
+  rankData: IRankData[] | null,
+  onClickSearchComapny: any,
 }
 
-const RankingList: FC<Props> = ({ title, rankData }) => {
+const RankingList: FC<Props> = ({ title, rankData, onClickSearchComapny }) => {
   return (
     <div className="aside-ranking">
       <h1>{title}</h1>
       <ul className="inner">
         {
-          rankData.map((item: IRankData, index: number) => (
-            <li className="rank" key={item.name}>
-              <span className={`status ${item.type}`}/>
+          rankData && rankData.map((item: IRankData, index: number) => (
+            <li className="rank" key={item.name} onClick={() => onClickSearchComapny(item.name)}>
+              <span className={`status ${item.status}`}/>
               <em>{index + 1}</em>
-              <Link href={item.link}>
+              <Link href="">
                 <a>{item.name}</a>
               </Link>
             </li>
