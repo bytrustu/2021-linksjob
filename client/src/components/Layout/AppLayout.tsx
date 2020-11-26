@@ -1,9 +1,10 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
 import Loading from '../Loading';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { loadUserAction } from '../../redux/reducers/userReducer';
 
 interface Props {
   children: ReactElement;
@@ -11,19 +12,19 @@ interface Props {
 
 const AppLayout: FC<Props> = ({ children }) => {
 
-  const [visible, setVisible] = useState(true);
-  const hideModal = () => {
-    setVisible(false);
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUserAction());
+  }, []);
 
-  const { loginUserLoading } = useSelector(state => state.user);
-
-  return <div className="main">
-    <Loading status={loginUserLoading} />
-    <Header />
-    <Content children={children} />
-    <Footer />
-  </div>;
+  return (
+    <div className="main">
+      <Loading />
+      <Header />
+      <Content children={children} />
+      <Footer />
+    </div>)
+    ;
 };
 
 export default AppLayout;

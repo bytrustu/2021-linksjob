@@ -73,7 +73,6 @@ const IndexPage = () => {
 
   return (
     <>
-      <Loading status={companySearchLoading} />
       <ComapnyModal visible={isCompanyVisible} setVisible={setIsCompanyVisible} keyword={searchText} />
       <AlertModal isVisible={isAlertVisible} setVisible={setIsAlertVisible} text={alertText} />
       <ConfirmModal isVisible={isConfirmVisible} setVisible={setIsConfirmVisible} company={searchText} />

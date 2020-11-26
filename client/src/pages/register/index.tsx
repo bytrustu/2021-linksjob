@@ -3,27 +3,29 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { registerUserAction } from 'src/redux/reducers/userReducer';
+import { REGISTER_USER_REQUEST } from 'src/redux/types';
 
 const Register = () => {
 
+  const dispatch = useDispatch();
   const { register, watch, errors, handleSubmit } = useForm();
   const password = useRef();
   password.current = watch('password');
-
-  const [errorFromSubmit, setErrorFromSubmit] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [errorFromSubmit, setErrorFromSubmit] = useState('');
 
   const onSubmit = async (data: { email: string; password: string; }) => {
     const { email, password } = data;
     try {
-      setIsLoading(true);
-      setIsLoading(false);
+      dispatch({
+        type: REGISTER_USER_REQUEST,
+        data: { email, password },
+      });
     } catch (e) {
-      setIsLoading(false);
       setErrorFromSubmit(e.message);
       setTimeout(() => {
         setErrorFromSubmit('');
-      },3000);
+      }, 3000);
     }
   };
 

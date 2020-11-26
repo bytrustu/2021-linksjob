@@ -18,3 +18,8 @@ export interface ISearchData {
     url: string,
   }
 }
+
+export interface IUserData {
+  email: string;
+  password: string;
+}

@@ -51,10 +51,9 @@ function processCompanyAPI(action) {
 
 function* processCompany(action) {
   try {
-    const result = yield call(processCompanyAPI, action);
+    yield call(processCompanyAPI, action);
     yield put({
       type: PROCESS_COMPANY_SUCCESS,
-      data: result,
     });
   } catch (e) {
     console.error(e);

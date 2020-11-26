@@ -4,40 +4,105 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
+  REGISTER_USER_REQUEST,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from '../types';
+import { IUserData } from '../../type/Interfaces';
 
-function sleep(sec) {
-  return new Promise(resolve => setTimeout(resolve, sec * 1000));
+
+// login
+
+function loginUserAPI(userData: IUserData) {
+  return axios.post(`/user/login`, userData);
 }
 
-function loadLoginUserAPI() {
-  return axios.get(`/user`);
-}
-
-function* loadLoginUser() {
+function* loginUser(action: any) {
   try {
-
-    console.log(`>>>>>>>`);
-    // const result = yield call(loadLoginUserAPI);
-    yield sleep(2);
+    const result = yield call(loginUserAPI, action.data);
     yield put({
       type: LOGIN_USER_SUCCESS,
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
     yield put({
       type: LOGIN_USER_FAILURE,
-      error: e,
+      error: e.response,
     });
   }
 }
 
 function* watchLoginUser() {
-  yield takeLatest(LOGIN_USER_REQUEST, loadLoginUser);
+  yield takeLatest(LOGIN_USER_REQUEST, loginUser);
+}
+
+// register
+
+function registerUserAPI(userData: IUserData) {
+  return axios.post(`/user/register`, userData);
+}
+
+function* registerUser(action: any) {
+  try {
+    const result = yield call(registerUserAPI, action.data);
+    yield put({
+      type: REGISTER_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: REGISTER_USER_FAILURE,
+      error: e.response,
+    });
+  }
+}
+
+function* watchRegisterUser() {
+  yield takeLatest(REGISTER_USER_REQUEST, registerUser);
+}
+
+// loadUser
+
+function loadUserAPI(token: string) {
+  const config: any = {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+  if (token) {
+    config.headers['x-auth-token'] = token;
+  }
+  return axios.get(`/user/auth`, config);
+}
+
+function* loadUser(action: any) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: e.response,
+    });
+  }
+}
+
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
 export default function* companySaga() {
   yield all([
     fork(watchLoginUser),
+    fork(watchRegisterUser),
+    fork(watchLoadUser),
   ]);
 }

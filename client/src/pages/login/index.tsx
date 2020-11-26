@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_USER_REQUEST } from '../../redux/types';
 import Loading from 'src/components/Loading';
+import { IUserData } from '../../type/Interfaces';
 
 const Login = () => {
 
@@ -13,12 +14,10 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: IUserData) => {
     try {
-      console.log(data);
-      dispatch({ type: LOGIN_USER_REQUEST });
+      dispatch({ type: LOGIN_USER_REQUEST, data });
     } catch (e) {
-      setIsLoading(false);
       setErrorFromSubmit(e.message);
       alert('인증에 실패 했습니다.');
     }
@@ -45,7 +44,7 @@ const Login = () => {
             ref={register({ required: true, minLength: 6 })}
           />
           {errors.password && errors.password.type === 'required' && <p>비밀번호는 필수 입력값 입니다.</p>}
-          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 4자리 길이를 입력해야 합니다.</p>}
+          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 길이를 입력해야 합니다.</p>}
 
           {errorFromSubmit && <p>에러가 발생했습니다.</p>}
           <Button type="primary" onClick={handleSubmit(onSubmit)}>로그인</Button>
