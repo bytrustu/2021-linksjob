@@ -28,14 +28,14 @@ export const findAllCompanyLinks = async () => {
   }
 };
 
-export const findCompanyLinks = async (companyId: string) => {
+export const findCompanyIdByLinks = async (companyId: number) => {
   try {
     const SQL: string = `select Company.name, Links.type, Links.url from Company
                           inner join Links
                           on Company.company_id = Links.company_id
                           where Company.company_id = ?
                           order by Links.type asc`;
-    const SQL_VALUES: [string] = [companyId];
+    const SQL_VALUES: [number] = [companyId];
     const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
     return row;
   } catch (e) {

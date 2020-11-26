@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { completeKeyword, removeTextRow, testRegExp } from '../modules/util';
+import { completeKeyword, jsonToTypeDic, removeTextRow, testRegExp } from '../modules/util';
 import { RegExp } from '../type/Enums';
 import * as db from '../modules/db_query';
 import MESSAGE from '../const/message';
@@ -26,9 +26,11 @@ router.get('/:keyword', async (req: Request, res: Response, next: NextFunction) 
         :
         await partialSettingCompany(commonKeyword, companyData);
     } else {
-      return res.status(400).json(MESSAGE.validationError);
+      return res.status(400).send({ error: MESSAGE.validationError });
     }
-    res.status(200).json(companyId);
+    const companyByLinks = await db.findCompanyIdByLinks(companyId);
+    const commonData = jsonToTypeDic(removeTextRow(companyByLinks));
+    return res.status(200).json(commonData);
   } catch (e) {
     next(e);
   }

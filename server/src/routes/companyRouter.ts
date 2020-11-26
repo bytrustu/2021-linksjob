@@ -34,9 +34,9 @@ router.get('/:companyId', async (req: Request, res: Response, next: NextFunction
   try {
     const { companyId } = req.params;
     if (!companyId) {
-      return res.status(400).send(MESSAGE.paramError);
+      return res.status(400).send({error: MESSAGE.paramError});
     }
-    const companyData = await db.findCompanyLinks(companyId);
+    const companyData = await db.findCompanyIdByLinks(parseInt(companyId, 10));
     res.status(200).json(companyData);
   } catch (e) {
     console.error(e);
