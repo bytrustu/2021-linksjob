@@ -156,6 +156,7 @@ export const findCompanyRank = async () => {
                                   where SearchLog.create_date between date_add(now(), interval -2 day) and date_add(now(), interval -1 day)
                                   group by SearchLog.company_id
                                   order by count desc
+                                  limit 0, 10
                                 ) as T1`;
     const BEFORE_SQL_VALUES: [] = [];
     const SQL: string = `select T1.company_id, T1.name from (
@@ -165,6 +166,7 @@ export const findCompanyRank = async () => {
                             where SearchLog.create_date between date_add(now(), interval -1 day) and now()
                             group by SearchLog.company_id
                             order by count desc
+                            limit 0, 10
                           ) as T1`;
     const SQL_VALUES: string[] = [];
     const [beforeRow] = await db.connect((con: any) => con.query(BEFORE_SQL, BEFORE_SQL_VALUES))();
@@ -172,6 +174,30 @@ export const findCompanyRank = async () => {
     rankData.before = beforeRow;
     rankData.now = row;
     return rankData;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const findUserByEmail = async (email: string) => {
+  try {
+    const SQL: string = `select id, pw from User where id = ?`;
+    const SQL_VALUES: string[] = [email];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const registerUser = async (email: string, password:string) => {
+  try {
+    const SQL: string = `insert into User(id, pw) values(?, ?)`;
+    const SQL_VALUES: string[] = [email, password];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row.insertId;
   } catch (e) {
     console.error(e);
     throw new Error(e);

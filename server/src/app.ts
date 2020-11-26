@@ -7,6 +7,7 @@ import config from './config';
 import { errorHandler, logHandler } from './modules/handler';
 import processRouter from './routes/processRouter';
 import companyRouter from './routes/companyRouter';
+import userRouter from './routes/userRouter';
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/process', processRouter);
 app.use('/api/company', companyRouter);
+app.use('/api/user', userRouter);
 
 app.use(logHandler);
 app.use(errorHandler);
