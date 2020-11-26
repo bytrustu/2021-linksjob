@@ -21,3 +21,4 @@
 - 이용가능하도록 서비스를 제공합니다.
 ![프로젝트 스크린샷](https://i.imgur.com/qfAmsFF.png)
 ![프로젝트 스크린샷](https://i.imgur.com/FvbqfTc.png)
+[![유튜브 영상](https://i.imgur.com/pnbnHsc.png)](https://youtu.be/uCABcYn4qU0)

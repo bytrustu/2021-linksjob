@@ -6,8 +6,11 @@ import {
   LOAD_MAIN_COMPANY_POSTS_FAILURE,
   SEARCH_COMPANY_REQUEST,
   SEARCH_COMPANY_SUCCESS,
-  SEARCH_COMPANY_FAILURE,
+  SEARCH_COMPANY_FAILURE, PROCESS_COMPANY_REQUEST, PROCESS_COMPANY_SUCCESS, PROCESS_COMPANY_FAILURE,
 } from '../types';
+
+
+// COMPANY
 
 function loadMainComapanyPostAPI() {
   return axios.get(`/company`);
@@ -32,6 +35,9 @@ function* watchLoadMainComapanyPost() {
   yield takeLatest(LOAD_MAIN_COMPANY_POSTS_REQUEST, loadMainComapanyPost);
 }
 
+
+// SEARCH
+
 function searchCompanyAPI(action) {
   return axios.get(`/company/search/${encodeURI(action.data)}`);
 }
@@ -41,7 +47,7 @@ function* searchCompany(action) {
     const result = yield call(searchCompanyAPI, action);
     yield put({
       type: SEARCH_COMPANY_SUCCESS,
-      data: result
+      data: result,
     });
   } catch (e) {
     console.error(e);
@@ -52,13 +58,41 @@ function* searchCompany(action) {
   }
 }
 
-function* watchcompanySearch() {
+function* watchCompanySearch() {
   yield takeLatest(SEARCH_COMPANY_REQUEST, searchCompany);
+}
+
+
+// PROCESS
+
+function processCompanyAPI(action) {
+  return axios.get(`/process/${encodeURI(action.data)}`);
+}
+
+function* processCompany(action) {
+  try {
+    const result = yield call(processCompanyAPI, action);
+    yield put({
+      type: PROCESS_COMPANY_SUCCESS,
+      data: result,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: PROCESS_COMPANY_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchProcessCompany() {
+  yield takeLatest(PROCESS_COMPANY_REQUEST, processCompany);
 }
 
 export default function* companySaga() {
   yield all([
     fork(watchLoadMainComapanyPost),
-    fork(watchcompanySearch),
+    fork(watchCompanySearch),
+    fork(watchProcessCompany),
   ]);
 }

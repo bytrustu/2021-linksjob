@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
+import { processCompanyAction } from '../../redux/reducers/companyReducer';
+import { useDispatch } from 'react-redux';
 
 const ConfirmModal = ({ isVisible, setVisible, company }) => {
+  const dispatch = useDispatch();
   const [isOk, setIsOk] = useState(false);
   const hideModal = () => {
     setVisible(false);
@@ -14,9 +17,8 @@ const ConfirmModal = ({ isVisible, setVisible, company }) => {
 
   useEffect(() => {
     if (isOk) {
-      alert('ok');
+      dispatch(processCompanyAction(company));
     }
-
   }, [isOk]);
 
   return (

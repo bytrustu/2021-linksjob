@@ -10,6 +10,7 @@ import ConfirmModal from '../components/Modal/ConfirmModal';
 import ComapnyModal from '../components/Modal/CompanyModal';
 import { searchRequestAction } from '../redux/reducers/companyReducer';
 import { RootState } from '../redux/reducers';
+import Loading from 'src/components/Loading';
 
 const rankData: IRankData[] = [
   ...range(10, 1).map(v => ({
@@ -21,7 +22,7 @@ const rankData: IRankData[] = [
 
 const IndexPage = () => {
   const dispatch = useDispatch();
-  const { companySearchData } = useSelector((state: RootState) => state.company);
+  const { companySearchData, companySearchLoading } = useSelector((state: RootState) => state.company);
   const [searchText, setSearchText] = useState<string>('');
   const [searchData, setSearchData] = useState<ISearchData | {}>({});
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const IndexPage = () => {
       setIsAlertVisible(true);
       return;
     }
-    dispatch(searchRequestAction);
+    dispatch(searchRequestAction(searchText));
   };
 
   useEffect(() => {
@@ -52,12 +53,12 @@ const IndexPage = () => {
       setSearchData({ ...setSearchData });
       setIsCompanyVisible(true);
     }
-    setSearchText('');
   }, [companySearchData]);
 
 
   return (
     <>
+      <Loading status={companySearchLoading} />
       <ComapnyModal visible={isCompanyVisible} setVisible={setIsCompanyVisible} />
       <AlertModal isVisible={isAlertVisible} setVisible={setIsAlertVisible} text="검색어가 잘못 되었습니다." />
       <ConfirmModal isVisible={isConfirmVisible} setVisible={setIsConfirmVisible} company={searchText} />
