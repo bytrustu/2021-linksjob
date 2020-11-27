@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'antd';
@@ -10,18 +10,19 @@ import { loadUserAction } from 'src/redux/reducers/userReducer';
 import { END } from 'redux-saga';
 import Router from 'next/router';
 import AlertModal from 'src/components/Modal/AlertModal';
+import { RootState } from '../../redux/reducers';
 
-const Register = () => {
+const Register: FC = () => {
 
   const dispatch = useDispatch();
-  const { isAuthenticated, userErrorMsg } = useSelector(state => state.user);
+  const { isAuthenticated, userErrorMsg } = useSelector((state: RootState) => state.user);
   const { register, watch, errors, handleSubmit } = useForm();
   const password = useRef();
   password.current = watch('password');
-  const [errorFromSubmit, setErrorFromSubmit] = useState('');
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [errorFromSubmit, setErrorFromSubmit] = useState<string>('');
+  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
 
-  const onSubmit = async (data: { email: string; password: string; }) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
     const { email, password } = data;
     try {
       dispatch({
@@ -46,11 +47,11 @@ const Register = () => {
     if (userErrorMsg) {
       setIsAlertVisible(true);
     }
-  }, [userErrorMsg])
+  }, [userErrorMsg]);
 
   return (
     <>
-      <AlertModal setVisible={setIsAlertVisible} isVisible={isAlertVisible} text={userErrorMsg}/>
+      <AlertModal setVisible={setIsAlertVisible} isVisible={isAlertVisible} text={userErrorMsg} />
       <div className="auth-wrap">
         <div style={{ textAlign: 'center' }}>
           <h3>회원 가입</h3>
@@ -67,7 +68,10 @@ const Register = () => {
           <input
             name="password"
             type="password"
-            ref={register({ required: true, pattern: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{6,50}$/ })}
+            ref={register({
+              required: true,
+              pattern: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{6,50}$/,
+            })}
           />
           {errors.password && errors.password.type === 'required' && <p>비밀번호는 필수 입력값 입니다.</p>}
           {errors.password && errors.password.type === 'pattern' && <p>비밀번호는 영문, 숫자, 특수문자 포함 6자 이상 입니다.</p>}
@@ -86,6 +90,7 @@ const Register = () => {
 
           {errorFromSubmit && <p>에러가 발생했습니다.</p>}
           <Button type="primary" onClick={handleSubmit(onSubmit)}>회원가입</Button>
+          <input type="submit" style={{ display: 'none' }} />
           <Link href="/login">
             <a>이미 아이디가 있다면...</a>
           </Link>

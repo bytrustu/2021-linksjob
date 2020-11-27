@@ -4,10 +4,11 @@ import Router from 'next/router';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserAction } from '../../redux/reducers/userReducer';
+import { RootState } from '../../redux/reducers';
 
 const Header: FC = () => {
 
-  const { isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const moveLogin = () => {

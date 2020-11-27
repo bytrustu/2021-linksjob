@@ -9,7 +9,12 @@ import { ISearchData } from 'src/type/Interfaces';
 import AlertModal from '../components/Modal/AlertModal';
 import ConfirmModal from '../components/Modal/ConfirmModal';
 import ComapnyModal from '../components/Modal/CompanyModal';
-import { loadRankAction, loadRealtimeSearchAction, searchRequestAction } from '../redux/reducers/companyReducer';
+import {
+  loadFavoriteCompanyAction,
+  loadRankAction,
+  loadRealtimeSearchAction,
+  searchRequestAction,
+} from '../redux/reducers/companyReducer';
 import { isEmptyObject, range, testRegExp } from '../utils';
 import { noMatchRegExpKeyword, searchError } from '../utils/const';
 import { RootState } from '../redux/reducers';
@@ -19,7 +24,6 @@ import { loadUserAction } from 'src/redux/reducers/userReducer';
 const IndexPage = () => {
   const dispatch = useDispatch();
   const { companySearchData, companySearchLoading, companySearchError, loadRankData, loadRealtimeSearchData } = useSelector((state: RootState) => state.company);
-  const { isAuthenticated } = useSelector(payload => payload.user);
   const [searchText, setSearchText] = useState<string>('');
   const [alertText, setAlertText] = useState<string>('');
   const [searchData, setSearchData] = useState<ISearchData | {}>({});
@@ -43,7 +47,7 @@ const IndexPage = () => {
     dispatch(searchRequestAction(searchText));
   };
 
-  const onClickSearchComapny = (keyword: string) => {
+  const onClickSearchComapny = (keyword: string): void => {
     setSearchText(keyword);
     dispatch(searchRequestAction(keyword));
   };
@@ -80,10 +84,10 @@ const IndexPage = () => {
           <h1 className="main-title"> 검색전에</h1>
         </div>
         <SearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} onSubmitSearch={onSubmitSearch} />
-        <RealtimeContainer realtimeKeywordData={loadRealtimeSearchData} onClickSearchComapny={onClickSearchComapny}/>
+        <RealtimeContainer realtimeKeywordData={loadRealtimeSearchData} onClickSearchComapny={onClickSearchComapny} />
       </div>
       <aside className="aside">
-        <RankingList title="실시간 인기 기업" rankData={loadRankData} onClickSearchComapny={onClickSearchComapny}/>
+        <RankingList title="실시간 인기 기업" rankData={loadRankData} onClickSearchComapny={onClickSearchComapny} />
       </aside>
     </>
   );
@@ -101,6 +105,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   context.store.dispatch(loadUserAction());
   context.store.dispatch(loadRankAction());
   context.store.dispatch(loadRealtimeSearchAction());
+  context.store.dispatch(loadFavoriteCompanyAction());
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });

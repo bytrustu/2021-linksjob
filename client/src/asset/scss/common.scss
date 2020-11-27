@@ -15,14 +15,14 @@
   padding: 5px 0 0 0;
   text-align: center;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     border: 1px solid #d4d4d4;
     background-color: #fff;
     color: #222;
   }
 
   & + .ant-btn-primary {
-    &:hover {
+    &:hover, &:focus, &:active {
       border: 1px solid $color-blue;
     }
   }
@@ -40,7 +40,7 @@
   background-color: $color-red;
   color: #fff;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     border: 1px solid $color-red;
     background-color: $color-red;
     color: #fff;
@@ -52,7 +52,7 @@
   background-color: $color-blue;
   color: #fff;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     border-color: 1px solid $color-blue !important;
     background-color: $color-blue;
     color: #fff;

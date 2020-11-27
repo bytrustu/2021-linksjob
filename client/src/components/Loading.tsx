@@ -1,15 +1,13 @@
-// @ts-ignore
 import React, { FC, useEffect, useState } from 'react';
 import { range } from '../utils';
 import { useSelector } from 'react-redux';
-import { UserAction } from '../redux/reducers/userReducer';
-import { CompanyAction } from '../redux/reducers/companyReducer';
+import { RootState } from 'src/redux/reducers';
 
 const Loading: FC = () => {
 
-  const [loadingText, setLoadingText] = useState('');
-  const { loginUserLoading, userLoading } = useSelector((state: UserAction) => state.user);
-  const { companySearchLoading } = useSelector((state: CompanyAction) => state.company);
+  const [loadingText, setLoadingText] = useState<string>('');
+  const { loginUserLoading, userLoading } = useSelector((state: RootState) => state.user);
+  const { companySearchLoading } = useSelector((state: RootState) => state.company);
 
   useEffect(() => {
     if (loginUserLoading || userLoading) {
@@ -36,5 +34,4 @@ const Loading: FC = () => {
   ) : null;
 };
 
-// @ts-ignore
 export default Loading;

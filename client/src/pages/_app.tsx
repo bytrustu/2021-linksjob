@@ -11,10 +11,6 @@ import { useSelector } from 'react-redux';
 
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const { isAuthenticated } = useSelector(state => state.user);
-  useEffect(() => {
-    console.log(isAuthenticated, `>>>>>>>>>`);
-  }, [isAuthenticated])
   return (
     <>
       <AppLayout>

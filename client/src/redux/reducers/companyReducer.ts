@@ -12,7 +12,17 @@ import {
   LOAD_REALTIME_SEARCH_REQUEST,
   LOAD_REALTIME_SEARCH_SUCCESS,
   LOAD_REALTIME_SEARCH_FAILURE,
+  LOAD_FAVORITE_COMPANY_REQUEST,
+  LOAD_FAVORITE_COMPANY_SUCCESS,
+  LOAD_FAVORITE_COMPANY_FAILURE,
+  ADD_FAVORITE_COMPANY_REQUEST,
+  ADD_FAVORITE_COMPANY_SUCCESS,
+  ADD_FAVORITE_COMPANY_FAILURE,
+  REMOVE_FAVORITE_COMPANY_REQUEST,
+  REMOVE_FAVORITE_COMPANY_SUCCESS,
+  REMOVE_FAVORITE_COMPANY_FAILURE,
 } from '../types';
+import { IFavorite } from '../../type/Interfaces';
 
 export const initialState = {
   companySearchData: null,
@@ -27,6 +37,11 @@ export const initialState = {
   loadRealtimeSearchLoading: false,
   loadRealtimeSearchDone: false,
   loadRealtimeSearchError: null,
+  favoriteCompanyData: [],
+  favoriteCompanyLoading: false,
+  favoriteCompanyDone: false,
+  favoriteCompanyError: null,
+
 };
 
 export const searchRequestAction = (searchText: string) => ({
@@ -47,11 +62,29 @@ export const loadRealtimeSearchAction = () => ({
   type: LOAD_REALTIME_SEARCH_REQUEST,
 });
 
+export const loadFavoriteCompanyAction = () => ({
+  type: LOAD_FAVORITE_COMPANY_REQUEST,
+});
+
+export const addFavoriteCompanyAction = (data: string) => ({
+  type: ADD_FAVORITE_COMPANY_REQUEST,
+  data: encodeURI(data)
+});
+
+export const removeFavoriteCompanyAction = (data: string) => ({
+  type: REMOVE_FAVORITE_COMPANY_REQUEST,
+  data: encodeURI(data),
+});
+
+
 export type CompanyAction =
   | ReturnType<typeof searchRequestAction>
   | ReturnType<typeof processCompanyAction>
   | ReturnType<typeof loadRankAction>
-  | ReturnType<typeof loadRealtimeSearchAction>;
+  | ReturnType<typeof loadRealtimeSearchAction>
+  | ReturnType<typeof loadFavoriteCompanyAction>
+  | ReturnType<typeof addFavoriteCompanyAction>
+  | ReturnType<typeof removeFavoriteCompanyAction>
 
 export type ICompanyReducerState = typeof initialState;
 
@@ -112,6 +145,47 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
         draft.loadRealtimeSearchError = action.error;
         break;
       }
+      case LOAD_FAVORITE_COMPANY_REQUEST:
+      case ADD_FAVORITE_COMPANY_REQUEST:
+      case REMOVE_FAVORITE_COMPANY_REQUEST: {
+        draft.favoriteCompanyLoading = true;
+        draft.favoriteCompanyDone = false;
+        draft.favoriteCompanyError = null;
+        break;
+      }
+
+      case LOAD_FAVORITE_COMPANY_FAILURE:
+      case ADD_FAVORITE_COMPANY_FAILURE:
+      case REMOVE_FAVORITE_COMPANY_FAILURE: {
+        draft.favoriteCompanyLoading = false;
+        draft.favoriteCompanyError = action.error.response.data.msg;
+        break;
+      }
+
+      case LOAD_FAVORITE_COMPANY_SUCCESS: {
+        draft.favoriteCompanyLoading = false;
+        draft.favoriteCompanyDone = true;
+        draft.favoriteCompanyData = action.data.data ? action.data.data : [];
+        break;
+      }
+
+      case ADD_FAVORITE_COMPANY_SUCCESS: {
+        draft.favoriteCompanyLoading = false;
+        draft.favoriteCompanyDone = true;
+        draft.favoriteCompanyData = draft.favoriteCompanyData.concat(...action.data.data);
+        break;
+      }
+
+      case REMOVE_FAVORITE_COMPANY_SUCCESS: {
+        console.log(action.data);
+        console.log(action.data);
+        console.log(action.data);
+        draft.favoriteCompanyLoading = false;
+        draft.favoriteCompanyDone = true;
+        draft.favoriteCompanyData = draft.favoriteCompanyData.filter(element => element.name !== action.data.data);
+        break;
+      }
+
       default: {
         break;
       }

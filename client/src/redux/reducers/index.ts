@@ -9,7 +9,7 @@ export interface IReducerState {
 }
 
 
-const rootReducer = (state = {}, action) => {
+const rootReducer = (state: any = {}, action: any) => {
   switch (action.type) {
     case HYDRATE:
       return action.payload;

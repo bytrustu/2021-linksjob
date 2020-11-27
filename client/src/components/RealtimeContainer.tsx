@@ -4,6 +4,7 @@ import RealtimeComment from 'src/components/RealtimeComment';
 
 type RealtimeContainerType = {
   realtimeKeywordData: any;
+  onClickSearchComapny: void;
 }
 
 const RealtimeContainer: FC<RealtimeContainerType> = ({ realtimeKeywordData, onClickSearchComapny }) => {

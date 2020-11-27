@@ -1,41 +1,43 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { companyObj } from '../../utils/const';
+import { addFavoriteCompanyAction, removeFavoriteCompanyAction } from '../../redux/reducers/companyReducer';
 
-const CompanyModal = ({visible, setVisible, keyword}) => {
+const CompanyModal = ({ visible, setVisible, keyword }) => {
 
-  const { companySearchData } = useSelector(state => state.company);
+  const dispatch = useDispatch();
+  const { companySearchData, favoriteCompanyData } = useSelector(state => state.company);
+  const { isAuthenticated } = useSelector(state => state.user);
   const [companyData, setCompanyData] = useState({});
-
-  useEffect(() => {
-    if (visible) {
-      setCompanyData({...companySearchData});
-    }
-  }, [visible])
-
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isOk, setIsOk] = useState(false);
+
   const hideModal = () => {
     setVisible(false);
   };
 
-  const onOk = () => {
-    setVisible(false);
-    setIsOk(true);
-  };
+  const onClickAddFavorite = () => {
+    dispatch(addFavoriteCompanyAction(keyword));
+  }
 
-  const onClickFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const onClickRemoveFavorite = () => {
+    dispatch(removeFavoriteCompanyAction(keyword));
   }
 
   useEffect(() => {
-    if (isOk) {
-      alert('ok');
+    if (visible) {
+      setCompanyData({ ...companySearchData });
     }
-
-  }, [isOk]);
+  }, [visible]);
+  useEffect(() => {
+    const favoriteArray = favoriteCompanyData.map(element => element.name);
+    if (favoriteArray.includes(keyword)) {
+      setIsFavorite(true)
+    } else {
+      setIsFavorite(false);
+    }
+  }, [favoriteCompanyData]);
 
   return (
     <Modal
@@ -48,11 +50,14 @@ const CompanyModal = ({visible, setVisible, keyword}) => {
       centered
     >
       <div class="company-favorite">
-        {isFavorite
-          ?
-          <img src="/image/star.svg" alt="스크랩ON" onClick={onClickFavorite}/>
-          :
-          <img src="/image/star_blank.svg" alt="스크랩OFF" onClick={onClickFavorite}/>
+        {
+          isAuthenticated && (
+            isFavorite
+              ?
+              <img src="/image/star.svg" alt="스크랩ON" onClick={onClickRemoveFavorite} />
+              :
+              <img src="/image/star_blank.svg" alt="스크랩OFF" onClick={onClickAddFavorite} />
+          )
         }
       </div>
       <div className="modal-search-text">
@@ -74,7 +79,7 @@ const CompanyModal = ({visible, setVisible, keyword}) => {
                     ))
                   }
                 </li>
-              )
+              );
             })
           }
         </ul>

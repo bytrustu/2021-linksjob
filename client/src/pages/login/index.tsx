@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'antd';
@@ -11,15 +11,16 @@ import { loadUserAction } from 'src/redux/reducers/userReducer';
 import { END } from 'redux-saga';
 import Router from 'next/router';
 import AlertModal from '../../components/Modal/AlertModal';
+import { RootState } from '../../redux/reducers';
 
-const Login = () => {
+const Login: FC = () => {
 
   const { register, errors, handleSubmit } = useForm();
-  const [errorFromSubmit, setErrorFromSubmit] = useState('');
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [errorFromSubmit, setErrorFromSubmit] = useState<string>('');
+  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const { isAuthenticated, userErrorMsg } = useSelector(state => state.user);
+  const { isAuthenticated, userErrorMsg } = useSelector((state: RootState) => state.user);
 
   const onSubmit = (data: IUserData) => {
     try {
@@ -39,11 +40,11 @@ const Login = () => {
     if (userErrorMsg) {
       setIsAlertVisible(true);
     }
-  }, [userErrorMsg])
+  }, [userErrorMsg]);
 
   return (
     <>
-      <AlertModal setVisible={setIsAlertVisible} isVisible={isAlertVisible} text={userErrorMsg}/>
+      <AlertModal setVisible={setIsAlertVisible} isVisible={isAlertVisible} text={userErrorMsg} />
       <div className="auth-wrap">
         <div style={{ textAlign: 'center' }}>
           <h3>아이디 로그인</h3>
@@ -67,6 +68,7 @@ const Login = () => {
 
           {errorFromSubmit && <p>에러가 발생했습니다.</p>}
           <Button type="primary" onClick={handleSubmit(onSubmit)}>로그인</Button>
+          <input type="submit" style={{ display: 'none' }} />
           <Link href="/register">
             <a>아직 아이디가 없다면...</a>
           </Link>

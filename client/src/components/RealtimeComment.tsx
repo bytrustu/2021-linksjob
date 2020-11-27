@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 
-const RealtimeComment = () => {
+const RealtimeComment:FC = () => {
   return (
     <div className="realtime-comment">
       <div className="comment-wrap">

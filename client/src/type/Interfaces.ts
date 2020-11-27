@@ -23,3 +23,8 @@ export interface IUserData {
   email: string;
   password: string;
 }
+
+export interface IFavorite {
+  email: string,
+  company: string;
+}

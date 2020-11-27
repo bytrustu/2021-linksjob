@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 type RealtimeCompanyType = {
   realtimeKeywordData: any;
+  onClickSearchComapny: any;
 }
 
 const RealtimeCompany:FC<RealtimeCompanyType> = ({ realtimeKeywordData, onClickSearchComapny }) => {
@@ -15,7 +16,7 @@ const RealtimeCompany:FC<RealtimeCompanyType> = ({ realtimeKeywordData, onClickS
       <ul className="list-content">
         <li>
           {
-            realtimeKeywordData && realtimeKeywordData.map((value: { name: React.ReactNode; }, index) => (
+            realtimeKeywordData && realtimeKeywordData.map((value: { name: React.ReactNode; }, index: number) => (
               <Link href="" key={index}>
                 <a className="ellipsis" onClick={() => onClickSearchComapny(value.name)}>{value.name}</a>
               </Link>
