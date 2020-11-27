@@ -1,7 +1,13 @@
 import React, { FC } from 'react';
 import { Modal } from 'antd';
 
-const AlertModal:FC = ({ isVisible, setVisible, text }) => {
+type AlertModalProps = {
+  isVisible: boolean;
+  setVisible: any;
+  text: string;
+}
+
+const AlertModal:FC<AlertModalProps> = ({ isVisible, setVisible, text }) => {
   const hideModal = () => {
     setVisible(false);
   };

@@ -4,26 +4,33 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { companyObj } from '../../utils/const';
 import { addFavoriteCompanyAction, removeFavoriteCompanyAction } from '../../redux/reducers/companyReducer';
+import { RootState } from '../../redux/reducers';
 
-const CompanyModal = ({ visible, setVisible, keyword }) => {
+type CompanyModalProps = {
+  visible: boolean;
+  setVisible: any;
+  keyword: string;
+}
+
+const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) => {
 
   const dispatch = useDispatch();
-  const { companySearchData, favoriteCompanyData } = useSelector(state => state.company);
-  const { isAuthenticated } = useSelector(state => state.user);
-  const [companyData, setCompanyData] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { companySearchData, favoriteCompanyData } = useSelector((state: RootState) => state.company);
+  const { isAuthenticated } = useSelector((state: RootState) => state.user);
+  const [companyData, setCompanyData] = useState<{}>({});
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  const hideModal = () => {
+  const hideModal = ():void => {
     setVisible(false);
   };
 
-  const onClickAddFavorite = () => {
+  const onClickAddFavorite = ():void => {
     dispatch(addFavoriteCompanyAction(keyword));
-  }
+  };
 
-  const onClickRemoveFavorite = () => {
+  const onClickRemoveFavorite = ():void => {
     dispatch(removeFavoriteCompanyAction(keyword));
-  }
+  };
 
   useEffect(() => {
     if (visible) {
@@ -33,7 +40,7 @@ const CompanyModal = ({ visible, setVisible, keyword }) => {
   useEffect(() => {
     const favoriteArray = favoriteCompanyData.map(element => element.name);
     if (favoriteArray.includes(keyword)) {
-      setIsFavorite(true)
+      setIsFavorite(true);
     } else {
       setIsFavorite(false);
     }

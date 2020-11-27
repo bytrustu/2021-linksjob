@@ -10,7 +10,7 @@ import axios from 'axios';
 import { loadUserAction } from 'src/redux/reducers/userReducer';
 import { END } from 'redux-saga';
 import Router from 'next/router';
-import AlertModal from '../../components/Modal/AlertModal';
+import AlertModal from 'src/components/Modal/AlertModal';
 import { RootState } from '../../redux/reducers';
 
 const Login: FC = () => {

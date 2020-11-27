@@ -1,99 +1,76 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Modal } from 'antd';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { Modal } from 'antd';
 import { companyObj } from '../../utils/const';
-import { addFavoriteCompanyAction, removeFavoriteCompanyAction } from '../../redux/reducers/companyReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
+import { uniqueTypeArray } from 'src/utils';
+import { removeFavoriteCompanyAction } from 'src/redux/reducers/companyReducer';
 
-type CompanyModalProps = {
+
+type FavoriteModalProps = {
   visible: boolean;
   setVisible: any;
-  keyword: string;
 }
 
-const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) => {
+const FavoriteModal: FC<FavoriteModalProps> = ({ visible, setVisible }) => {
 
   const dispatch = useDispatch();
-  const { companySearchData, favoriteCompanyData } = useSelector((state: RootState) => state.company);
-  const { isAuthenticated } = useSelector((state: RootState) => state.user);
-  const [companyData, setCompanyData] = useState<{}>({});
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const { favoriteCompanyData } = useSelector((state: RootState) => state.company);
 
-  const hideModal = ():void => {
+  const hideModal = (): void => {
     setVisible(false);
   };
 
-  const onClickAddFavorite = ():void => {
-    dispatch(addFavoriteCompanyAction(keyword));
-  };
-
-  const onClickRemoveFavorite = ():void => {
-    dispatch(removeFavoriteCompanyAction(keyword));
-  };
-
-  useEffect(() => {
-    if (visible) {
-      setCompanyData({ ...companySearchData });
-    }
-  }, [visible]);
-  useEffect(() => {
-    const favoriteArray = favoriteCompanyData.map(element => element.name);
-    if (favoriteArray.includes(keyword)) {
-      setIsFavorite(true);
-    } else {
-      setIsFavorite(false);
-    }
-  }, [favoriteCompanyData]);
+  const onClickRemoveFavorite = (company:string) => {
+    dispatch(removeFavoriteCompanyAction(company));
+  }
 
   return (
     <Modal
-      className="modal-company"
-      title={keyword}
+      className="modal-favorite"
+      title="스크랩"
       visible={visible}
       onCancel={hideModal}
       okText="스크랩"
       cancelText="닫기"
       centered
     >
-      <div class="company-favorite">
-        {
-          isAuthenticated && (
-            isFavorite
-              ?
-              <img src="/image/star.svg" alt="스크랩ON" onClick={onClickRemoveFavorite} />
-              :
-              <img src="/image/star_blank.svg" alt="스크랩OFF" onClick={onClickAddFavorite} />
-          )
-        }
-      </div>
-      <div className="modal-search-text">
-        <ul>
-          {
-            companyData && Object.entries(companyData).map(([key, value]) => {
-              const name = companyObj[key].name;
-              const src = companyObj[key].image;
-              const isPadding = companyObj[key].padding;
-              return (
-                <li className="link-list">
-                  <img className={isPadding && 'logo-padding'} src={src} alt={`${name}로고`} />
-                  <span>{name}</span>
-                  {
-                    value.map((item, index) => (
-                      <Link href={item.url}>
-                        <a target="_blank">{`Link${index + 1}`}</a>
-                      </Link>
-                    ))
-                  }
-                </li>
-              );
-            })
-          }
-        </ul>
-        <p>- 관심 기업으로 설정 하시면 스크랩에서 확인 가능 합니다.</p>
-      </div>
+
+      <ul className="favorite-list">
+        {favoriteCompanyData.map((element:{name:string, link:any[]}, index) => {
+          const uniqueLink = uniqueTypeArray(element.link);
+          const imageElements = uniqueLink.map((item, i) => {
+            const name = companyObj[item.type].name;
+            const src = companyObj[item.type].image;
+            const isPadding = companyObj[item.type].padding;
+            return (
+              <Link key={i} href={item.url}>
+                <a title={name} target="_blank">
+                  <img className={isPadding && 'logo-padding'} src={src} />
+                </a>
+              </Link>
+            )
+          })
+          return (
+            <li key={element.name}>
+              <em>{index + 1}</em>
+              <span className="favorite-name ellipsis">{element.name}</span>
+              <div className="company-wrap">
+                {
+                  imageElements
+                }
+              </div>
+              <div className="remove" onClick={() => onClickRemoveFavorite(element.name)}>
+                <span />
+              </div>
+            </li>
+          );
+        })}
+
+      </ul>
     </Modal>
   );
 };
 
-export default CompanyModal;
+export default FavoriteModal;

@@ -3,22 +3,28 @@ import { Modal } from 'antd';
 import { processCompanyAction } from '../../redux/reducers/companyReducer';
 import { useDispatch } from 'react-redux';
 
-const ConfirmModal = ({ isVisible, setVisible, company }) => {
+type ConfirmModalProps = {
+  isVisible: boolean;
+  setVisible: any;
+  company: string;
+}
+
+const ConfirmModal: FC<ConfirmModalProps> = ({ isVisible, setVisible, company }) => {
   const dispatch = useDispatch();
-  const [isOk, setIsOk] = useState(false);
-  const hideModal = () => {
+  const [isOk, setIsOk] = useState<boolean>(false);
+  const hideModal = ():void => {
     setVisible(false);
     setIsOk(false);
   };
 
-  const onOk = () => {
+  const onOk = ():void => {
     setVisible(false);
     setIsOk(true);
   };
 
   useEffect(() => {
     setIsOk(false);
-  }, [isVisible])
+  }, [isVisible]);
 
   useEffect(() => {
     if (isOk) {

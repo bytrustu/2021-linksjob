@@ -396,6 +396,97 @@
   }
 }
 
+.modal-favorite {
+  width: 550px !important;
+
+  .ant-btn-primary {
+    display: none;
+  }
+
+  .ant-modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .favorite-list {
+    width: 100%;
+    padding: 7px 3px;
+    box-sizing: border-box;
+    position: relative;
+
+    li {
+      padding: 5px 0;
+      position: relative;
+    }
+
+    li + li {
+      border-top: 1px solid #ececec;
+    }
+
+    .company-wrap {
+      display: inline-block;
+      margin-left: 20px;
+      img {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    }
+
+    em {
+      display: inline-block;
+      width: 20px;
+      font-weight: 900;
+      color: #94969b;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 12px;
+    }
+
+    span.favorite-name {
+      display: inline-block;
+      vertical-align: middle;
+      letter-spacing: 1px;
+      font-weight: 400;
+      color: #222;
+      font-size: 16px;
+      margin-left: 20px;
+      width: 120px;
+      &:hover {
+        color: #222;
+      }
+    }
+
+    .remove {
+      display: inline-block;
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      cursor: pointer;
+      span {
+        color: #999;
+        font-size: 14px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        &::after {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          margin: 3px 0 0 7px;
+          vertical-align: top;
+          content: '';
+          background: url(../image/ico.png) 0 0 no-repeat;
+          background-position: -33px 0;
+          background-size: 400px auto;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+}
+
 .modal-confirm {
   .modal-search-text {
     font-size: 18px;

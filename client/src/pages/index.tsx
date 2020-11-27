@@ -4,8 +4,8 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import SearchInput from '../components/SearchInput';
 import RealtimeContainer from '../components/RealtimeContainer';
-import RankingList from 'src/components/RankingList';
-import { ISearchData } from 'src/type/Interfaces';
+import RankingList from '../components/RankingList';
+import { ISearchData } from '../type/Interfaces';
 import AlertModal from '../components/Modal/AlertModal';
 import ConfirmModal from '../components/Modal/ConfirmModal';
 import ComapnyModal from '../components/Modal/CompanyModal';
@@ -19,7 +19,7 @@ import { isEmptyObject, range, testRegExp } from '../utils';
 import { noMatchRegExpKeyword, searchError } from '../utils/const';
 import { RootState } from '../redux/reducers';
 import wrapper from '../store/configureStore';
-import { loadUserAction } from 'src/redux/reducers/userReducer';
+import { loadUserAction } from '../redux/reducers/userReducer';
 
 const IndexPage = () => {
   const dispatch = useDispatch();
@@ -51,7 +51,6 @@ const IndexPage = () => {
     setSearchText(keyword);
     dispatch(searchRequestAction(keyword));
   };
-
 
   useEffect(() => {
     const isEmptyData = isEmptyObject(companySearchData);

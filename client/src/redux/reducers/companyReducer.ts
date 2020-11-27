@@ -100,6 +100,7 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       }
       case SEARCH_COMPANY_SUCCESS:
       case PROCESS_COMPANY_SUCCESS: {
+        console.log(action.data.data);
         draft.companySearchLoading = false;
         draft.companySearchDone = true;
         draft.companySearchData = action.data.data ? action.data.data : {};

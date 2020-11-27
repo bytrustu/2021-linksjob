@@ -3,13 +3,13 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { REGISTER_USER_REQUEST } from 'src/redux/types';
-import wrapper from 'src/store/configureStore';
+import { REGISTER_USER_REQUEST } from '../../redux/types';
+import wrapper from '../../store/configureStore';
 import axios from 'axios';
-import { loadUserAction } from 'src/redux/reducers/userReducer';
+import { loadUserAction } from '../../redux/reducers/userReducer';
 import { END } from 'redux-saga';
 import Router from 'next/router';
-import AlertModal from 'src/components/Modal/AlertModal';
+import AlertModal from '../../components/Modal/AlertModal';
 import { RootState } from '../../redux/reducers';
 
 const Register: FC = () => {
