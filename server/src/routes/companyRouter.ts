@@ -26,22 +26,6 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 /**
- * @route   GET api/comapny/realtime/keyword
- * @return  { } keywordData
- * @desc    get realtime search keyword
- * @access  public
- */
-router.get('/realtime/keyword', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const keywordData = await db.findReltimeSearchLog();
-    res.status(200).json(keywordData);
-  } catch (e) {
-    console.error(e);
-    next(e);
-  }
-});
-
-/**
  * @route   GET api/comapny/search/rank
  * @return  { } rankData
  * @desc    get company rank
@@ -67,42 +51,9 @@ router.get('/favorite', isLogin, async (req: Request, res: Response, next: NextF
   const { userId } = req.params;
   try {
     const favoriteData = await db.findFavoritesByEmail(userId);
-    res.status(200).json(favoriteData);
-  } catch (e) {
-    console.error(e);
-    throw new Error();
-  }
-});
-
-/**
- * @route   POST api/company/favorite
- * @return  { {name:string}[] } favoriteData
- * @desc    add favorite company
- * @access  private
- */
-router.post('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
-  const { userId, company } = req.params;
-  try {
-    const insertId:number = await db.insertFavorite(userId, company);
-    const favoriteData = await db.findFavoriteById(insertId);
-    res.status(200).json(favoriteData);
-  } catch (e) {
-    console.error(e);
-    throw new Error();
-  }
-});
-
-/**
- * @route   DELETE api/company/favorite
- * @return  { string } company
- * @desc    remove favorite company
- * @access  private
- */
-router.delete('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
-  const { userId, company } = req.params;
-  try {
-    await db.removeFavorite(userId, company);
-    res.status(200).json(company);
+    const commonData: { name: string, link?: any }[] = removeTextRow(favoriteData);
+    const addLinksData = await addCompanyByLinks(commonData);
+    res.status(200).json(addLinksData);
   } catch (e) {
     console.error(e);
     throw new Error();
@@ -127,6 +78,43 @@ router.get('/:companyId', async (req: Request, res: Response, next: NextFunction
   } catch (e) {
     console.error(e);
     next(e);
+  }
+});
+
+/**
+ * @route   POST api/company/favorite
+ * @return  { {name:string}[] } favoriteData
+ * @desc    add favorite company
+ * @access  private
+ */
+router.post('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const { userId, company } = req.params;
+  try {
+    const insertId: number = await db.insertFavorite(userId, company);
+    const favoriteData = await db.findFavoriteById(insertId);
+    const commonData: { name: string, link?: any }[] = removeTextRow(favoriteData);
+    const addLinksData = await addCompanyByLinks(commonData);
+    res.status(200).json(addLinksData);
+  } catch (e) {
+    console.error(e);
+    throw new Error();
+  }
+});
+
+/**
+ * @route   DELETE api/company/favorite
+ * @return  { string } company
+ * @desc    remove favorite company
+ * @access  private
+ */
+router.delete('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const { userId, company } = req.params;
+  try {
+    await db.removeFavorite(userId, company);
+    res.status(200).json(company);
+  } catch (e) {
+    console.error(e);
+    throw new Error();
   }
 });
 
@@ -159,6 +147,33 @@ router.get('/search/:keyword', async (req: Request, res: Response, next: NextFun
   }
 });
 
+/**
+ * @route   GET api/comapny/realtime/keyword
+ * @return  { } keywordData
+ * @desc    get realtime search keyword
+ * @access  public
+ */
+router.get('/realtime/keyword', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const keywordData = await db.findReltimeSearchLog();
+    res.status(200).json(keywordData);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
 
+const addCompanyByLinks = async (commonData: {name:string, link?: any[]}[]) => {
+  if (commonData.length > 0) {
+    const companyNames = commonData.map(element => element.name);
+    let index = 0;
+    for (const company of companyNames) {
+      const links = await db.findCompanyByLinks(company);
+      commonData[index] = { ...commonData[index], link: links };
+      index++;
+    }
+  }
+  return commonData;
+}
 
 export default router;

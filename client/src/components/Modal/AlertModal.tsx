@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Modal } from 'antd';
 
-const AlertModal = ({ isVisible, setVisible, text }) => {
+const AlertModal:FC = ({ isVisible, setVisible, text }) => {
   const hideModal = () => {
     setVisible(false);
   };
