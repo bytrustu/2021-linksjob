@@ -10,6 +10,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAILURE,
 } from '../types';
 import { IUserData } from '../../type/Interfaces';
 
@@ -68,21 +71,13 @@ function* watchRegisterUser() {
 
 // loadUser
 
-function loadUserAPI(token: string) {
-  const config: any = {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  };
-  if (token) {
-    config.headers['x-auth-token'] = token;
-  }
-  return axios.get(`/user/auth`, config);
+function loadUserAPI() {
+  return axios.get(`/user/auth`);
 }
 
-function* loadUser(action: any) {
+function* loadUser() {
   try {
-    const result = yield call(loadUserAPI, action.data);
+    const result = yield call(loadUserAPI);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result,
@@ -99,10 +94,30 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
+// logout
+
+function* logoutUser() {
+  try {
+    yield put({
+      type: LOGOUT_USER_SUCCESS,
+    });
+  } catch (e) {
+    yield put({
+      type: LOGOUT_USER_FAILURE,
+      error: e.response,
+    });
+  }
+}
+
+function* watchLogoutUser() {
+  yield takeLatest(LOGOUT_USER_REQUEST, logoutUser);
+}
+
 export default function* companySaga() {
   yield all([
     fork(watchLoginUser),
     fork(watchRegisterUser),
     fork(watchLoadUser),
+    fork(watchLogoutUser),
   ]);
 }

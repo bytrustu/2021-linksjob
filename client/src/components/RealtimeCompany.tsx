@@ -15,8 +15,8 @@ const RealtimeCompany:FC<RealtimeCompanyType> = ({ realtimeKeywordData, onClickS
       <ul className="list-content">
         <li>
           {
-            realtimeKeywordData && realtimeKeywordData.map((value: { name: React.ReactNode; }) => (
-              <Link href="">
+            realtimeKeywordData && realtimeKeywordData.map((value: { name: React.ReactNode; }, index) => (
+              <Link href="" key={index}>
                 <a className="ellipsis" onClick={() => onClickSearchComapny(value.name)}>{value.name}</a>
               </Link>
             ))

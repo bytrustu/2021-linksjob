@@ -12,11 +12,6 @@ interface Props {
 
 const AppLayout: FC<Props> = ({ children }) => {
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadUserAction());
-  }, []);
-
   return (
     <div className="main">
       <Loading />

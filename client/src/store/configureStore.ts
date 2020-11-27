@@ -16,7 +16,7 @@ interface IStore extends Store {
 }
 
 const configureStore = (context: any) => {
-  console.log(context);
+  // console.log(context);
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   const enhancer = process.env.NODE_ENV === 'production'

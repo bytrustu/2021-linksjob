@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { END } from 'redux-saga';
+import axios from 'axios';
 import SearchInput from '../components/SearchInput';
 import RealtimeContainer from '../components/RealtimeContainer';
 import RankingList from 'src/components/RankingList';
-import { IRankData, ISearchData } from 'src/type/Interfaces';
+import { ISearchData } from 'src/type/Interfaces';
 import AlertModal from '../components/Modal/AlertModal';
 import ConfirmModal from '../components/Modal/ConfirmModal';
 import ComapnyModal from '../components/Modal/CompanyModal';
-import Loading from '../components/Loading';
 import { loadRankAction, loadRealtimeSearchAction, searchRequestAction } from '../redux/reducers/companyReducer';
 import { isEmptyObject, range, testRegExp } from '../utils';
 import { noMatchRegExpKeyword, searchError } from '../utils/const';
 import { RootState } from '../redux/reducers';
-
+import wrapper from '../store/configureStore';
+import { loadUserAction } from 'src/redux/reducers/userReducer';
 
 const IndexPage = () => {
   const dispatch = useDispatch();
   const { companySearchData, companySearchLoading, companySearchError, loadRankData, loadRealtimeSearchData } = useSelector((state: RootState) => state.company);
+  const { isAuthenticated } = useSelector(payload => payload.user);
   const [searchText, setSearchText] = useState<string>('');
   const [alertText, setAlertText] = useState<string>('');
   const [searchData, setSearchData] = useState<ISearchData | {}>({});
@@ -45,6 +48,7 @@ const IndexPage = () => {
     dispatch(searchRequestAction(keyword));
   };
 
+
   useEffect(() => {
     const isEmptyData = isEmptyObject(companySearchData);
     if (isEmptyData && searchText.length > 0) {
@@ -59,17 +63,11 @@ const IndexPage = () => {
   }, [companySearchData]);
 
   useEffect(() => {
-    dispatch(loadRankAction());
-    dispatch(loadRealtimeSearchAction());
-  }, []);
-
-  useEffect(() => {
     if (companySearchError) {
       setAlertText(searchError);
       setIsAlertVisible(true);
     }
   }, [companySearchError]);
-
 
   return (
     <>
@@ -91,4 +89,18 @@ const IndexPage = () => {
   );
 
 };
+
 export default IndexPage;
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  const cookies = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookies) {
+    axios.defaults.headers.Cookie = cookies;
+  }
+  context.store.dispatch(loadUserAction());
+  context.store.dispatch(loadRankAction());
+  context.store.dispatch(loadRealtimeSearchAction());
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});

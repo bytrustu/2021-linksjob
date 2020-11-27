@@ -4,27 +4,46 @@ import Link from 'next/link';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_USER_REQUEST } from '../../redux/types';
-import Loading from 'src/components/Loading';
 import { IUserData } from '../../type/Interfaces';
+import wrapper from 'src/store/configureStore';
+import axios from 'axios';
+import { loadUserAction } from 'src/redux/reducers/userReducer';
+import { END } from 'redux-saga';
+import Router from 'next/router';
+import AlertModal from '../../components/Modal/AlertModal';
 
 const Login = () => {
 
   const { register, errors, handleSubmit } = useForm();
   const [errorFromSubmit, setErrorFromSubmit] = useState('');
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const { isAuthenticated, userErrorMsg } = useSelector(state => state.user);
 
   const onSubmit = (data: IUserData) => {
     try {
       dispatch({ type: LOGIN_USER_REQUEST, data });
     } catch (e) {
       setErrorFromSubmit(e.message);
-      alert('인증에 실패 했습니다.');
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      Router.push('/');
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (userErrorMsg) {
+      setIsAlertVisible(true);
+    }
+  }, [userErrorMsg])
+
   return (
     <>
+      <AlertModal setVisible={setIsAlertVisible} isVisible={isAlertVisible} text={userErrorMsg}/>
       <div className="auth-wrap">
         <div style={{ textAlign: 'center' }}>
           <h3>아이디 로그인</h3>
@@ -56,5 +75,16 @@ const Login = () => {
     </>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  const cookies = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookies) {
+    axios.defaults.headers.Cookie = cookies;
+  }
+  context.store.dispatch(loadUserAction());
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});
 
 export default Login;

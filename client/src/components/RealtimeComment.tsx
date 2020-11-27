@@ -11,7 +11,7 @@ const RealtimeComment = () => {
         </div>
         <div className="list-content">
           <li className="list-item">
-            <Link href="">
+            <Link href="/">
               <a className="ellipsis">추가예정 입니다.</a>
             </Link>
             <span className="ellipsis">기업명</span>

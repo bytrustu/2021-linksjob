@@ -1,17 +1,25 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUserAction } from '../../redux/reducers/userReducer';
 
 const Header: FC = () => {
+
+  const { isAuthenticated } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const moveLogin = () => {
     Router.push('/login');
   };
 
+  const onLogout = () => {
+    dispatch(logoutUserAction());
+  }
+
   return (
     <header className="header">
-
       <div className="header-warp">
         <h1>
           <Link href="/">
@@ -24,7 +32,13 @@ const Header: FC = () => {
 
         <div className="button-group">
           <Button type="primary">스크랩</Button>
-          <Button onClick={moveLogin}>로그인</Button>
+          {
+            isAuthenticated
+              ?
+              <Button onClick={onLogout} type="danger">로그아웃</Button>
+              :
+              <Button onClick={moveLogin}>로그인</Button>
+          }
         </div>
 
       </div>

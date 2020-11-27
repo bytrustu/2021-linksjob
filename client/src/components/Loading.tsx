@@ -8,11 +8,11 @@ import { CompanyAction } from '../redux/reducers/companyReducer';
 const Loading: FC = () => {
 
   const [loadingText, setLoadingText] = useState('');
-  const { loginUserLoading } = useSelector((state: UserAction) => state.user);
+  const { loginUserLoading, userLoading } = useSelector((state: UserAction) => state.user);
   const { companySearchLoading } = useSelector((state: CompanyAction) => state.company);
 
   useEffect(() => {
-    if (loginUserLoading) {
+    if (loginUserLoading || userLoading) {
       setLoadingText('로딩 중입니다.');
     }
     if (companySearchLoading) {
@@ -22,7 +22,7 @@ const Loading: FC = () => {
 
   // @ts-ignore
   const arr: [number] = range(20);
-  return loginUserLoading || companySearchLoading ? (
+  return loginUserLoading || userLoading || companySearchLoading ? (
     <div className="back">
       <div className="loading-wrap">
         <p className="loading-text">{loadingText}</p>

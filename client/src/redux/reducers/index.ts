@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { HYDRATE } from 'next-redux-wrapper';
 import company, { ICompanyReducerState } from './companyReducer';
 import user, { IUserReducerState } from './userReducer';
 
@@ -7,10 +8,20 @@ export interface IReducerState {
   company: ICompanyReducerState,
 }
 
-const rootReducer = combineReducers({
-  user,
-  company,
-});
+
+const rootReducer = (state = {}, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      return action.payload;
+    default : {
+      const combineReducer = combineReducers({
+        user,
+        company,
+      });
+      return combineReducer(state, action);
+    }
+  }
+};
 
 export default rootReducer;
 export type RootState = ReturnType<typeof rootReducer>;
