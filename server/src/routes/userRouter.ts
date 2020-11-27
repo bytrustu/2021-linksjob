@@ -11,7 +11,7 @@ const { JWT_SECRET } = config;
 
 /**
  * @route   POST api/user
- * @desc    login user
+ * @desc    register user
  * @access  public
  */
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
@@ -39,7 +39,7 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
 /**
  * @route   POST api/user
- * @desc    register user
+ * @desc    login user
  * @access  public
  */
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
@@ -74,17 +74,17 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
  */
 // @ts-ignore
 router.get('/auth', async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.header('x-auth-token');
+  const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({ msg: '토큰이 없음. 인증이 거부됨.' });
   }
   try {
     const decoded: any = jwt.verify(token, <string>JWT_SECRET);
-    const findUserByEmail: any = db.findUserByEmail(decoded.user);
+    const findUserByEmail: any = await db.findUserByEmail(decoded.user);
     if (findUserByEmail.length === 0) {
       return res.status(403).json({ msg: '유저가 존재하지 않습니다.' });
     }
-    res.status(200).send();
+    res.status(200).json(findUserByEmail[0].id);
   } catch (e) {
     console.error(e);
     res.status(400).json({ msg: '토큰이 유효하지 않습니다.' });

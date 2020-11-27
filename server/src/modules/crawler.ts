@@ -25,6 +25,7 @@ export const workingCrawler = async (companyNames: string[], keyword: string): P
     }
     return result;
   } catch (e) {
+    console.error(e);
     throw new Error(e);
   }
 };
