@@ -19,7 +19,7 @@ FOREIGN KEY (`company_id`) REFERENCES `Company` (`company_id`) ON DELETE CASCADE
 );
 
 create table `Favorite` (
-`favorited_id` int not null auto_increment primary key,
+`favorite_id` int not null auto_increment primary key,
 `id` varchar(50) not null,
 `company_id` int not null,
 FOREIGN KEY (`id`) REFERENCES `User` (`id`) ON DELETE CASCADE,

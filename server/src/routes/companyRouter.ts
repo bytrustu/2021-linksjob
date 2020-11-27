@@ -4,6 +4,8 @@ import MESSAGE from '../const/message';
 import { compareRank, completeKeyword, jsonToTypeDic, removeTextRow, testRegExp } from '../modules/util';
 import { RegExp } from '../type/Enums';
 import { ICrawlData, IRankData } from '../type/Interfaces';
+import jwt from 'jsonwebtoken';
+import { isLogin } from '../modules/auth';
 
 const router = express.Router();
 
@@ -57,6 +59,57 @@ router.get('/rank', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 /**
+ * @route   GET api/company/favorite
+ * @desc    get favorite companys
+ * @access  private
+ */
+router.get('/favorite', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const { userId } = req.params;
+  try {
+    const favoriteData = await db.findFavoritesByEmail(userId);
+    res.status(200).json(favoriteData);
+  } catch (e) {
+    console.error(e);
+    throw new Error();
+  }
+});
+
+/**
+ * @route   POST api/company/favorite
+ * @return  { {name:string}[] } favoriteData
+ * @desc    add favorite company
+ * @access  private
+ */
+router.post('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const { userId, company } = req.params;
+  try {
+    const insertId:number = await db.insertFavorite(userId, company);
+    const favoriteData = await db.findFavoriteById(insertId);
+    res.status(200).json(favoriteData);
+  } catch (e) {
+    console.error(e);
+    throw new Error();
+  }
+});
+
+/**
+ * @route   DELETE api/company/favorite
+ * @return  { string } company
+ * @desc    remove favorite company
+ * @access  private
+ */
+router.delete('/favorite/:company', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const { userId, company } = req.params;
+  try {
+    await db.removeFavorite(userId, company);
+    res.status(200).json(company);
+  } catch (e) {
+    console.error(e);
+    throw new Error();
+  }
+});
+
+/**
  * @route   GET api/comapny/:companyId
  * @param   { number } companyId
  * @return  { ICrawlData } companyData
@@ -105,5 +158,7 @@ router.get('/search/:keyword', async (req: Request, res: Response, next: NextFun
     next(e);
   }
 });
+
+
 
 export default router;

@@ -1,13 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import * as db from '../modules/db_query';
 import { testRegExp } from '../modules/util';
-import { createToken } from '../modules/auth';
-import config from '../config';
-
+import { isLogin, createToken } from '../modules/auth';
 const router = express.Router();
-const { JWT_SECRET } = config;
 
 /**
  * @route   POST api/user
@@ -69,26 +65,13 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 
 /**
  * @route   POST api/user/auth
+ * @return  { string } email
  * @desc    auth user
- * @access  public
+ * @access  private
  */
-// @ts-ignore
-router.get('/auth', async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ msg: '토큰이 없음. 인증이 거부됨.' });
-  }
-  try {
-    const decoded: any = jwt.verify(token, <string>JWT_SECRET);
-    const findUserByEmail: any = await db.findUserByEmail(decoded.user);
-    if (findUserByEmail.length === 0) {
-      return res.status(403).json({ msg: '유저가 존재하지 않습니다.' });
-    }
-    res.status(200).json(findUserByEmail[0].id);
-  } catch (e) {
-    console.error(e);
-    res.status(400).json({ msg: '토큰이 유효하지 않습니다.' });
-  }
+router.get('/auth', isLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.userId;
+  res.status(200).json(userId);
 });
 
 export default router;

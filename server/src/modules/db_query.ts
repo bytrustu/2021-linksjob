@@ -203,3 +203,58 @@ export const registerUser = async (email: string, password:string) => {
     throw new Error(e);
   }
 };
+
+export const findFavoritesByEmail = async (email: string) => {
+  try {
+    const SQL: string = `select Company.name from Favorite
+                          inner join Company 
+                          on Favorite.company_id = Company.company_id
+                          where Favorite.id = ?;`;
+    const SQL_VALUES: string[] = [email];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const insertFavorite = async (email: string, company: string): Promise<number> => {
+  try {
+    let SQL: string = `insert into Favorite(id, company_id)
+                        values(?, (select company_id from Company where name = ?))`;
+    const SQL_VALUES: string[] = [email, company];
+    const [row] = await db.connect(async (con: any) => await con.query(SQL, SQL_VALUES))();
+    return row.insertId;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const removeFavorite = async (email: string, company: string): Promise<void> => {
+  try {
+    let SQL: string = `Delete from Favorite
+                        where id = ? and company_id = (select company_id from Company where name = ?)`;
+    const SQL_VALUES: string[] = [email, company];
+    await db.connect(async (con: any) => await con.query(SQL, SQL_VALUES))();
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export const findFavoriteById = async (insertId: number) => {
+  try {
+    const SQL: string = `select Company.name from Favorite
+                          inner join Company 
+                          on Favorite.company_id = Company.company_id
+                          where Favorite.favorite_id = ?;`;
+    const SQL_VALUES: [number] = [insertId];
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))();
+    return row;
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
