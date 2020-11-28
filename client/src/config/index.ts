@@ -3,7 +3,7 @@ interface IConfig {
 }
 
 const config:IConfig = {
-  SERVER_URL: 'http://133.186.159.157'
+  SERVER_URL: 'http://133.186.159.157:9000'
 };
 
 export default config;

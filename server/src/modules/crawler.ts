@@ -37,9 +37,8 @@ const processWanted = async (keyword: string): Promise<IResponseCompany[]> => {
     const data: IResponseCompany[] = [];
 
     const browser = await puppeteer.launch({
-      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
-
     const page = await browser.newPage();
     await page.goto(url, {
       waitUntil: 'load',
@@ -99,7 +98,7 @@ const processKreditjob = async (keyword: string): Promise<IResponseCompany[]> =>
       link: '',
     };
     const browser = await puppeteer.launch({
-      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
     await page.goto(origin, {
@@ -158,9 +157,8 @@ const processRocketpunch = async (keyword: string): Promise<IResponseCompany[]> 
     const data: IResponseCompany[] = [];
 
     const browser = await puppeteer.launch({
-      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
-
     const page = await browser.newPage();
     await page.goto(url, {
       waitUntil: 'load',
@@ -191,10 +189,7 @@ export const screenShot = async (url: string): Promise<string> => {
   const filename: string = uuid();
   const screenshotPath: string = path.join(__dirname + `/../../public/images/screenshot/${filename}.png`);
   const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      '--window-size=1920, 1080',
-    ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   const page = await browser.newPage();
   await page.goto(url, {
