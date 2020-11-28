@@ -1,3 +1,6 @@
+CREATE DATABASE linksjob default CHARACTER SET UTF8;
+
+
 create table `User` (
 `id` varchar(50) not null primary key,
 `pw` varchar(64) not null,
