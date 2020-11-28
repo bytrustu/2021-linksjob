@@ -1,17 +1,21 @@
-# 🏢 Linksjob
+# 🏢 Linksjob ( http://linksjob.me )
 
-> React + Typescript + Redux-saga + Next.js + Express + SCSS
+> Typescript + React + Redux + Redux-saga + Nextjs + Scss
 >
-> + **server** : http://localhost:9000
-> + **client** : http://localhost:3000
+> TypeScript + Nodejs + Express + MySQL
 
 ### 프로젝트 목적
 
 기업을 검색하면 여러 채용 사이트 (원티드, 사람인, 크레딧잡, 잡플래닛, 로켓펀치) 등의 링크정보를 제공합니다.
 
-- [x] 필요한 기업 정보의 링크 데이터 크롤링
-- [x] 기업 정보 시각화
-- [x] 개인 정보 관리
+- [x] 필요한 기업 정보의 링크 데이터 크롤링 ✔
+- [x] 기업 정보 시각화 ✔
+- [x] 개인 정보 관리 ✔
+- [x] 프로젝트 배포 ✔
+- [x] 반응형 작업 ☓
+- [x] 코멘트 등록 ☓
+
+
 
 ### 프로젝트 상세
 
