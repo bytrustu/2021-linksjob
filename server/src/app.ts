@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import morgan from 'morgan';
+import hpp from 'hpp';
+import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import config from './config';
@@ -13,11 +15,21 @@ import userRouter from './routes/userRouter';
 const app = express();
 const { PORT } = config;
 
-const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:80", "http://localhost", "http://jobslinks.me", "http://133.186.159.157"],
-  credentials: true
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(cors({
+    origin: 'http://linksjob.com',
+    credentials: true,
+  }));
+} else {
+  app.use(morgan('dev'));
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
 }
-app.use(cors(corsOptions));
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
