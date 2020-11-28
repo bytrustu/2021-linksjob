@@ -1,7 +1,15 @@
 export const noMatchRegExpKeyword: string = '검색 중 오류가 발생 했습니다.';
 export const searchError: string = '오류가 발생했습니다. 다시 시도해주세요.';
 
-export const companyObj = {
+type companyObjType = {
+  [key: string]: {
+    name: string;
+    image: string;
+    padding: boolean;
+  }
+}
+
+export const companyObj:companyObjType = {
   jobplanet: {
     name: '잡플래닛',
     image: '/image/jobplanet.png',
@@ -26,5 +34,5 @@ export const companyObj = {
     name: '원티드',
     image: '/image/wanted.png',
     padding: false,
-  }
-}
+  },
+};

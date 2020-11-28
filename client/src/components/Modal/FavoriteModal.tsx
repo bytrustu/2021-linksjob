@@ -22,9 +22,9 @@ const FavoriteModal: FC<FavoriteModalProps> = ({ visible, setVisible }) => {
     setVisible(false);
   };
 
-  const onClickRemoveFavorite = (company:string) => {
+  const onClickRemoveFavorite = (company: string) => {
     dispatch(removeFavoriteCompanyAction(company));
-  }
+  };
 
   return (
     <Modal
@@ -38,7 +38,7 @@ const FavoriteModal: FC<FavoriteModalProps> = ({ visible, setVisible }) => {
     >
 
       <ul className="favorite-list">
-        {favoriteCompanyData.map((element:{name:string, link:any[]}, index) => {
+        {favoriteCompanyData.map((element: { name: string, link: any[] }, index:number) => {
           const uniqueLink = uniqueTypeArray(element.link);
           const imageElements = uniqueLink.map((item, i) => {
             const name = companyObj[item.type].name;
@@ -47,11 +47,11 @@ const FavoriteModal: FC<FavoriteModalProps> = ({ visible, setVisible }) => {
             return (
               <Link key={i} href={item.url}>
                 <a title={name} target="_blank">
-                  <img className={isPadding && 'logo-padding'} src={src} />
+                  <img className={isPadding ? 'logo-padding' : ''} src={src} />
                 </a>
               </Link>
-            )
-          })
+            );
+          });
           return (
             <li key={element.name}>
               <em>{index + 1}</em>

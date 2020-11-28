@@ -27,11 +27,11 @@ import { IFavorite } from '../../type/Interfaces';
 
 
 // SEARCH
-
+// @ts-ignore
 function searchCompanyAPI(action) {
   return axios.get(`/company/search/${encodeURI(action.data)}`);
 }
-
+// @ts-ignore
 function* searchCompany(action) {
   try {
     const result = yield call(searchCompanyAPI, action);
@@ -54,11 +54,11 @@ function* watchCompanySearch() {
 
 
 // PROCESS
-
+// @ts-ignore
 function processCompanyAPI(action) {
   return axios.get(`/process/${encodeURI(action.data)}`);
 }
-
+// @ts-ignore
 function* processCompany(action) {
   try {
     const result = yield call(processCompanyAPI, action);
@@ -162,6 +162,7 @@ function addFavoriteCompanyAPI(data: string) {
   return axios.post(`/company/favorite/${data}`);
 }
 
+// @ts-ignore
 function* addFavoriteCompany(action) {
   try {
     const result = yield call(addFavoriteCompanyAPI, action.data);
@@ -187,7 +188,7 @@ function* watchAddFavoriteCompany() {
 function removeFavoriteCompanyAPI(data:string) {
   return axios.delete(`/company/favorite/${data}`, );
 }
-
+// @ts-ignore
 function* removeFavoriteCompany(action) {
   try {
     const result = yield call(removeFavoriteCompanyAPI, action.data);

@@ -50,9 +50,9 @@ const Header: FC = () => {
             {
               isAuthenticated
                 ?
-                <Button onClick={onLogout} type="danger">로그아웃</Button>
+                <button onClick={onLogout} className="btn btn-danger">로그아웃</button>
                 :
-                <Button onClick={moveLogin}>로그인</Button>
+                <button onClick={moveLogin} className="btn btn-ghost">로그인</button>
             }
           </div>
 

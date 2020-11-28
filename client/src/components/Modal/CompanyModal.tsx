@@ -20,15 +20,15 @@ const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) =
   const [companyData, setCompanyData] = useState<{}>({});
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  const hideModal = ():void => {
+  const hideModal = (): void => {
     setVisible(false);
   };
 
-  const onClickAddFavorite = ():void => {
+  const onClickAddFavorite = (): void => {
     dispatch(addFavoriteCompanyAction(keyword));
   };
 
-  const onClickRemoveFavorite = ():void => {
+  const onClickRemoveFavorite = (): void => {
     dispatch(removeFavoriteCompanyAction(keyword));
   };
 
@@ -38,7 +38,7 @@ const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) =
     }
   }, [visible]);
   useEffect(() => {
-    const favoriteArray = favoriteCompanyData.map(element => element.name);
+    const favoriteArray = favoriteCompanyData.map((element: any) => element.name);
     if (favoriteArray.includes(keyword)) {
       setIsFavorite(true);
     } else {
@@ -56,7 +56,7 @@ const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) =
       cancelText="닫기"
       centered
     >
-      <div class="company-favorite">
+      <div className="company-favorite">
         {
           isAuthenticated && (
             isFavorite
@@ -74,12 +74,14 @@ const CompanyModal: FC<CompanyModalProps> = ({ visible, setVisible, keyword }) =
               const name = companyObj[key].name;
               const src = companyObj[key].image;
               const isPadding = companyObj[key].padding;
+
               return (
                 <li className="link-list">
-                  <img className={isPadding && 'logo-padding'} src={src} alt={`${name}로고`} />
+                  <img className={isPadding ? 'logo-padding' : ''} src={src} alt={`${name}로고`} />
                   <span>{name}</span>
                   {
-                    value.map((item, index) => (
+                    // @ts-ignore
+                    value.map((item:any, index:number) => (
                       <Link href={item.url}>
                         <a target="_blank">{`Link${index + 1}`}</a>
                       </Link>

@@ -16,7 +16,7 @@ export const testRegExp = (type: string, value: string): boolean => {
 
 export const isEmptyObject = (obj: any) => JSON.stringify(obj) === '{}';
 
-export const uniqueTypeArray = (arr: any[], target: string): any[] => {
+export const uniqueTypeArray = (arr: any[]): any[] => {
   // @ts-ignore
   const types = [...new Set([...arr.map(element => element.type)])];
   const links = types.map(element => {

@@ -49,7 +49,8 @@ function registerUserAPI(userData: IUserData) {
   return axios.post(`/user/register`, userData);
 }
 
-function* registerUser(action: any) {
+// @ts-ignore
+function* registerUser(action) {
   try {
     const result = yield call(registerUserAPI, action.data);
     yield put({

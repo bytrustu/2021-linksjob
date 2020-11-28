@@ -54,9 +54,11 @@ export default (state: IUserReducerState = initialState, action: UserAction) =>
       }
       case LOGIN_USER_SUCCESS:
       case REGISTER_USER_SUCCESS: {
+        // @ts-ignore
         new Cookies().set('token', action.data.token, { path: '/' });
         draft.isAuthenticated = true;
         draft.userLoading = false;
+        // @ts-ignore
         draft.userData = action.data.user;
         break;
       }
@@ -64,7 +66,8 @@ export default (state: IUserReducerState = initialState, action: UserAction) =>
       case REGISTER_USER_FAILURE: {
         draft.isAuthenticated = false;
         draft.userLoading = false;
-        draft.user = null;
+        draft.userData = null;
+        // @ts-ignore
         draft.userErrorMsg = action.error.data.msg;
         break;
       }
@@ -77,14 +80,14 @@ export default (state: IUserReducerState = initialState, action: UserAction) =>
       case LOAD_USER_SUCCESS: {
           draft.isAuthenticated = true;
           draft.userLoading = false;
+        // @ts-ignore
           draft.userData = action.data.data;
           break;
       }
       case LOAD_USER_FAILURE: {
         draft.isAuthenticated = false;
         draft.userLoading = false;
-        draft.token = null;
-        draft.user = null;
+        draft.userData = null;
         break;
       }
 
@@ -103,8 +106,8 @@ export default (state: IUserReducerState = initialState, action: UserAction) =>
       case LOGOUT_USER_FAILURE: {
         draft.isAuthenticated = false;
         draft.userLoading = false;
-        draft.token = null;
-        draft.user = null;
+        draft.userData = null;
+        // @ts-ignore
         draft.userErrorMsg = action.error.data.msg;
         break;
       }

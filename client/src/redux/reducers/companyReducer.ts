@@ -22,7 +22,6 @@ import {
   REMOVE_FAVORITE_COMPANY_SUCCESS,
   REMOVE_FAVORITE_COMPANY_FAILURE,
 } from '../types';
-import { IFavorite } from '../../type/Interfaces';
 
 export const initialState = {
   companySearchData: null,
@@ -100,15 +99,16 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       }
       case SEARCH_COMPANY_SUCCESS:
       case PROCESS_COMPANY_SUCCESS: {
-        console.log(action.data.data);
         draft.companySearchLoading = false;
         draft.companySearchDone = true;
+        // @ts-ignore
         draft.companySearchData = action.data.data ? action.data.data : {};
         break;
       }
       case SEARCH_COMPANY_FAILURE:
       case PROCESS_COMPANY_FAILURE: {
         draft.companySearchLoading = false;
+        // @ts-ignore
         draft.companySearchError = action.error;
         break;
       }
@@ -121,11 +121,13 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       case LOAD_RANK_SUCCESS: {
         draft.loadRankLoading = false;
         draft.loadRankDone = true;
+        // @ts-ignore
         draft.loadRankData = action.data.data ? action.data.data : [];
         break;
       }
       case LOAD_RANK_FAILURE: {
         draft.loadRankLoading = false;
+        // @ts-ignore
         draft.loadRankError = action.error;
         break;
       }
@@ -138,11 +140,13 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       case LOAD_REALTIME_SEARCH_SUCCESS: {
         draft.loadRealtimeSearchLoading = false;
         draft.loadRealtimeSearchDone = true;
+        // @ts-ignore
         draft.loadRealtimeSearchData = action.data.data ? action.data.data : [];
         break;
       }
       case LOAD_REALTIME_SEARCH_FAILURE: {
         draft.loadRealtimeSearchLoading = false;
+        // @ts-ignore
         draft.loadRealtimeSearchError = action.error;
         break;
       }
@@ -159,6 +163,7 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       case ADD_FAVORITE_COMPANY_FAILURE:
       case REMOVE_FAVORITE_COMPANY_FAILURE: {
         draft.favoriteCompanyLoading = false;
+        // @ts-ignore
         draft.favoriteCompanyError = action.error.response.data.msg;
         break;
       }
@@ -166,6 +171,7 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       case LOAD_FAVORITE_COMPANY_SUCCESS: {
         draft.favoriteCompanyLoading = false;
         draft.favoriteCompanyDone = true;
+        // @ts-ignore
         draft.favoriteCompanyData = action.data.data ? action.data.data : [];
         break;
       }
@@ -173,16 +179,15 @@ export default (state: ICompanyReducerState = initialState, action: CompanyActio
       case ADD_FAVORITE_COMPANY_SUCCESS: {
         draft.favoriteCompanyLoading = false;
         draft.favoriteCompanyDone = true;
+        // @ts-ignore
         draft.favoriteCompanyData = draft.favoriteCompanyData.concat(...action.data.data);
         break;
       }
 
       case REMOVE_FAVORITE_COMPANY_SUCCESS: {
-        console.log(action.data);
-        console.log(action.data);
-        console.log(action.data);
         draft.favoriteCompanyLoading = false;
         draft.favoriteCompanyDone = true;
+        // @ts-ignore
         draft.favoriteCompanyData = draft.favoriteCompanyData.filter(element => element.name !== action.data.data);
         break;
       }

@@ -47,7 +47,7 @@ const IndexPage = () => {
     dispatch(searchRequestAction(searchText));
   };
 
-  const onClickSearchComapny = (keyword: string): void => {
+  const onClickSearchComapny = (keyword: string):any => {
     setSearchText(keyword);
     dispatch(searchRequestAction(keyword));
   };
@@ -106,5 +106,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   context.store.dispatch(loadRealtimeSearchAction());
   context.store.dispatch(loadFavoriteCompanyAction());
   context.store.dispatch(END);
+  // @ts-ignore
   await context.store.sagaTask.toPromise();
 });

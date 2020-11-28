@@ -100,7 +100,7 @@ a:hover {
       right: 0;
       top: $header-top + 4px;
 
-      .ant-btn + .ant-btn {
+      button + button {
         margin-left: 8px;
       }
     }
