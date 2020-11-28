@@ -1,10 +1,8 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement } from 'react';
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
 import Loading from '../Loading';
-import { useDispatch } from 'react-redux';
-import { loadUserAction } from '../../redux/reducers/userReducer';
 
 interface Props {
   children: ReactElement;

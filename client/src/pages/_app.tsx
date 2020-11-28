@@ -7,10 +7,12 @@ import AppLayout from '../components/Layout/AppLayout';
 import '../asset/scss/reset.scss';
 import '../asset/scss/layout.scss';
 import '../asset/scss/common.scss';
+import '../asset/scss/media.scss';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
+      <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" className="next-head"/>
       <AppLayout>
         <Component {...pageProps} />
       </AppLayout>

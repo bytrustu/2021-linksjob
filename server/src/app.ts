@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(cors({
-    origin: ['http://linksjob.com', 'http://localhost', 'http://localhost:3000'],
+    origin: ['http://linksjob.com', 'http://localhost', 'http://localhost:3000', 'http://192.168.1.105:3000'],
     credentials: true,
   }));
 } else {
