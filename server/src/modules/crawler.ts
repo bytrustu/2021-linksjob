@@ -18,7 +18,7 @@ export const workingCrawler = async (companyNames: string[], keyword: string): P
     const result: ICrawlData = {};
     let index = 0;
     for (const item of diff) {
-      console.log(`🔥 start crawler(${++index}/${diff.length}) : ${item} ( keyword: ${keyword} )`);
+      // console.log(`🔥 start crawler(${++index}/${diff.length}) : ${item} ( keyword: ${keyword} )`);
       const fn: any = processCrawler[item];
       const crawlData: IResponseCompany[] = await fn(keyword);
       result[item] = crawlData;
