@@ -4,6 +4,7 @@
   // header
   .header {
     height: 70px;
+
     .header-warp {
       h1 {
         left: 40px;
@@ -20,6 +21,7 @@
           padding: 3px 5px 0 8px;
           top: 8px;
           letter-spacing: 3px;
+          box-shadow: 7px 5px 5px #357ddec2;
         }
       }
 
@@ -48,7 +50,6 @@
     flex-direction: column !important;
     max-width: 100%;
     align-items: center;
-    min-height: calc(100vh - 400px);
 
     .main-content {
       width: 100% !important;
@@ -74,7 +75,6 @@
       }
     }
 
-
     .aside {
       width: 100% !important;
       margin-left: 0 !important;
@@ -83,6 +83,19 @@
 
       .aside-ranking {
         min-height: auto !important;
+      }
+    }
+
+    .auth-wrap {
+      padding: 0 50px;
+
+      h3 {
+        margin-left: -140px;
+      }
+
+      form {
+        min-width: 300px;
+        margin: 20px auto 30px;
       }
     }
   }
@@ -181,16 +194,34 @@
 
   }
 
+  .modal-alert {
+    .ant-modal-header {
+      padding: 35px 45px 35px;
+    }
+  }
+
   .ant-modal-body {
-    padding: 35px 50px 0;
+    padding: 0 35px;
     font-size: 13px;
   }
+
+  .modal-favorite {
+    padding: 0 50px;
+  }
+
+  .modal-company {
+    .ant-modal-body {
+      padding: 0 50px;
+    }
+  }
+
 }
 
 @media screen and (max-width: 500px) {
   // header
   .header {
     height: 70px;
+
     .header-warp {
       h1 {
         left: 25px;
@@ -207,6 +238,7 @@
           padding: 2px 3px 0 5px;
           top: 10px;
           letter-spacing: 3px;
+          box-shadow: 5px 5px 5px #357ddec2;
         }
       }
 
@@ -235,7 +267,6 @@
     flex-direction: column !important;
     max-width: 100%;
     align-items: center;
-    min-height: calc(100vh - 400px);
     margin-top: 30px !important;
 
     .main-content {
@@ -263,6 +294,53 @@
         display: none;
       }
     }
+
+    .auth-wrap {
+      padding: 0 35px;
+
+      form {
+        min-width: 280px;
+        margin: 20px auto 30px;
+
+        label {
+          margin-top: 10px;
+        }
+      }
+    }
+
+  }
+
+  // modal-favorite
+  .modal-favorite {
+
+    .ant-modal-body {
+      font-size: 13px;
+      max-height: 350px;
+
+      li {
+        padding: 10px 0 !important;
+
+        .favorite-name {
+          font-size: 14px !important;
+          font-weight: 600 !important;
+        }
+
+        .company-wrap {
+          display: block !important;
+          margin-left: 34px !important;
+
+          img {
+            width: 27px !important;
+            height: 27px !important;
+          }
+        }
+
+        .remove {
+          top: 25px !important;
+        }
+      }
+    }
+
 
   }
 }

@@ -12,7 +12,6 @@
 }
 
 
-
 .ant-btn {
   padding: 5px 0 0 0;
   text-align: center;
@@ -142,7 +141,7 @@
 
   input[name=keyword] {
     display: block;
-    width: 736px;
+    width: 100%;
     height: 60px;
     padding: 0 10px 0 72px;
     border: 0;
@@ -272,7 +271,7 @@
 
 .ant-modal {
   padding: 0;
-  top: -10% !important;
+  top: 0 !important;
   transition-delay: 0s;
   transition: none;
 
@@ -294,7 +293,7 @@
 .ant-modal-header {
   position: relative;
   border-bottom: unset;
-  padding: 45px 45px 0;
+  padding: 45px 45px 35px;
 }
 
 .ant-modal-title {
@@ -313,7 +312,7 @@
 }
 
 .ant-modal-body {
-  padding: 35px 75px 0;
+  padding: 0 75px;
   font-size: 13px;
 }
 
@@ -341,9 +340,11 @@
 
 .modal-company {
   position: relative;
+
   .ant-modal-title {
     font-size: 24px;
   }
+
   .modal-search-text {
     font-size: 18px;
 
@@ -375,6 +376,7 @@
         }
       }
     }
+
     p {
       font-size: 14px;
       margin-top: 15px;
@@ -428,6 +430,7 @@
     .company-wrap {
       display: inline-block;
       margin-left: 20px;
+
       img {
         width: 30px;
         height: 30px;
@@ -455,6 +458,7 @@
       font-size: 16px;
       margin-left: 20px;
       width: 120px;
+
       &:hover {
         color: #222;
       }
@@ -466,12 +470,14 @@
       right: 15px;
       top: 10px;
       cursor: pointer;
+
       span {
         color: #999;
         font-size: 14px;
         display: inline-block;
         width: 16px;
         height: 16px;
+
         &::after {
           display: inline-block;
           width: 16px;
@@ -502,7 +508,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 500px;
 
   h3 {
     font-size: 32px;
@@ -510,7 +515,8 @@
   }
 
   form {
-    width: 400px;
+    min-width: 400px;
+    width: auto;
     margin: 20px auto 60px;
   }
 
@@ -545,39 +551,43 @@
 
   a {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: $color-title;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
   }
+
+  h1 {
+    font-weight: 100;
+    color: white;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(79, 98, 148);
+    color: black;
+  }
+
+  p {
+    color: $color-red;
+    font-size: 12px;
+  }
+
+  p::before {
+    display: inline;
+    content: "-";
+    margin-right: 5px;
+  }
+
+  hr {
+    margin-top: 30px;
+  }
 }
 
-
-.auth-wrap h1 {
-  font-weight: 100;
-  color: white;
-  text-align: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgb(79, 98, 148);
-  color: black;
-}
-
-.auth-wrap p {
-  color: $color-red;
-  font-size: 12px;
-}
-
-.auth-wrap p::before {
-  display: inline;
-  content: "-";
-  margin-right: 5px;
-}
-
-.auth-wrap hr {
-  margin-top: 30px;
-}
 
 .logo-padding {
   padding: 5px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }

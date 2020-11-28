@@ -19,9 +19,7 @@ const RankingList: FC<Props> = ({ title, rankData, onClickSearchComapny }) => {
             <li className="rank" key={item.name} onClick={() => onClickSearchComapny(item.name)}>
               <span className={`status ${item.status}`}/>
               <em>{index + 1}</em>
-              <Link href="">
-                <a>{item.name}</a>
-              </Link>
+              <span className="rank-name">{item.name}</span>
             </li>
           ))
         }

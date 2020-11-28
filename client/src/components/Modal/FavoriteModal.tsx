@@ -47,7 +47,7 @@ const FavoriteModal: FC<FavoriteModalProps> = ({ visible, setVisible }) => {
             return (
               <Link key={i} href={item.url}>
                 <a title={name} target="_blank">
-                  <img className={isPadding ? 'logo-padding' : ''} src={src} />
+                  <img className={isPadding ? 'logo-padding' : ''} src={src} alt="링크로고"/>
                 </a>
               </Link>
             );

@@ -79,7 +79,7 @@ const IndexPage = () => {
       <ConfirmModal isVisible={isConfirmVisible} setVisible={setIsConfirmVisible} company={searchText} />
       <div className="main-content">
         <div className="title-wrap">
-          <h1 className="main-title">기업의 채용정보가 필요할때,</h1>
+          <h1 className="main-title">기업의 링크 정보가 필요할때,</h1>
           <h1 className="main-title"> 검색전에</h1>
         </div>
         <SearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} onSubmitSearch={onSubmitSearch} />

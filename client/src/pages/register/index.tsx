@@ -70,7 +70,7 @@ const Register: FC = () => {
             type="password"
             ref={register({
               required: true,
-              pattern: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{6,50}$/,
+              pattern: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{6,50}$/,
             })}
           />
           {errors.password && errors.password.type === 'required' && <p>비밀번호는 필수 입력값 입니다.</p>}

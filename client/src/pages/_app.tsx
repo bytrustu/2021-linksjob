@@ -8,6 +8,8 @@ import '../asset/scss/reset.scss';
 import '../asset/scss/layout.scss';
 import '../asset/scss/common.scss';
 import '../asset/scss/media.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/reducers';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

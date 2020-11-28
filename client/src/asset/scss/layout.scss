@@ -53,6 +53,7 @@ a:hover {
         background: $color-blue;
         color: white;
         letter-spacing: 5px;
+        box-shadow: 7px 5px 5px #357ddec2;
       }
 
 
@@ -123,7 +124,6 @@ a:hover {
     max-width: $screen-width;
     box-sizing: border-box;
     margin: 0 auto;
-    min-height: calc(100vh - 400px);
 
     .main-content {
       width: calc(100% - 300px);
@@ -192,6 +192,7 @@ a:hover {
             padding: 7px 3px;
             box-sizing: border-box;
             position: relative;
+            cursor: pointer;
 
             .status {
               display: inline-block;
@@ -236,7 +237,7 @@ a:hover {
               font-size: 12px;
             }
 
-            a {
+            .rank-name {
               display: inline-block;
               vertical-align: middle;
               letter-spacing: 1px;
