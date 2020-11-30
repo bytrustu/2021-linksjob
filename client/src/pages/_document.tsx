@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta property="og:title" content="링크즈잡 | 이름을 검색하면 기업의 링크정보가 한눈에" />
           <meta property="og:url" content="http://linksjob.me" />
-          <meta property="og:image" content="https://i.imgur.com/0vOj8Zr.png" />
+          <meta property="og:image" content="https://i.imgur.com/YYxYsIW.png" />
           <meta property="og:description" content="링크즈잡 | 이름을 검색하면 기업의 링크정보가 한눈에" />
           <meta name="description" content="링크즈잡 | 이름을 검색하면 기업의 링크정보가 한눈에" />
           <meta name="keyword" content="채용정보, 채용, 면접후기, 기업정보, 취업사이트, 구직사이트" />
